@@ -1,0 +1,4 @@
+#Mon Mar 14 21:46:33 CST 2022
+base.0=F\:\\Code_Field\\Mi_Notes\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+renamed.0=classes.dex
+path.0=classes.dex
