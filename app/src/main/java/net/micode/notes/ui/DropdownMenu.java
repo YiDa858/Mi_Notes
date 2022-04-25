@@ -39,6 +39,7 @@ public class DropdownMenu {
         mMenu = mPopupMenu.getMenu();
         mPopupMenu.getMenuInflater().inflate(menuId, mMenu);
         mButton.setOnClickListener(new OnClickListener() {
+            @Override
             public void onClick(View v) {
                 mPopupMenu.show();
             }

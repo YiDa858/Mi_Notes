@@ -160,7 +160,7 @@ public class DateTimePicker extends FrameLayout {
 
     public interface OnDateTimeChangedListener {
         void onDateTimeChanged(DateTimePicker view, int year, int month,
-                int dayOfMonth, int hourOfDay, int minute);
+                               int dayOfMonth, int hourOfDay, int minute);
     }
 
     public DateTimePicker(Context context) {
@@ -185,7 +185,7 @@ public class DateTimePicker extends FrameLayout {
 
         mHourSpinner = (NumberPicker) findViewById(R.id.hour);
         mHourSpinner.setOnValueChangedListener(mOnHourChangedListener);
-        mMinuteSpinner =  (NumberPicker) findViewById(R.id.minute);
+        mMinuteSpinner = (NumberPicker) findViewById(R.id.minute);
         mMinuteSpinner.setMinValue(MINUT_SPINNER_MIN_VAL);
         mMinuteSpinner.setMaxValue(MINUT_SPINNER_MAX_VAL);
         mMinuteSpinner.setOnLongPressUpdateInterval(100);
@@ -256,14 +256,14 @@ public class DateTimePicker extends FrameLayout {
     /**
      * Set the current date
      *
-     * @param year The current year
-     * @param month The current month
+     * @param year       The current year
+     * @param month      The current month
      * @param dayOfMonth The current dayOfMonth
-     * @param hourOfDay The current hourOfDay
-     * @param minute The current minute
+     * @param hourOfDay  The current hourOfDay
+     * @param minute     The current minute
      */
     public void setCurrentDate(int year, int month,
-            int dayOfMonth, int hourOfDay, int minute) {
+                               int dayOfMonth, int hourOfDay, int minute) {
         setCurrentYear(year);
         setCurrentMonth(month);
         setCurrentDay(dayOfMonth);
@@ -342,6 +342,7 @@ public class DateTimePicker extends FrameLayout {
 
     /**
      * Get current hour in 24 hour mode, in the range (0~23)
+     *
      * @return The current hour in 24 hour mode
      */
     public int getCurrentHourOfDay() {
@@ -349,7 +350,7 @@ public class DateTimePicker extends FrameLayout {
     }
 
     private int getCurrentHour() {
-        if (mIs24HourView){
+        if (mIs24HourView) {
             return getCurrentHourOfDay();
         } else {
             int hour = getCurrentHourOfDay();
@@ -413,7 +414,7 @@ public class DateTimePicker extends FrameLayout {
     /**
      * @return true if this is in 24 hour view else false.
      */
-    public boolean is24HourView () {
+    public boolean is24HourView() {
         return mIs24HourView;
     }
 
@@ -470,6 +471,7 @@ public class DateTimePicker extends FrameLayout {
 
     /**
      * Set the callback that indicates the 'Set' button has been pressed.
+     *
      * @param callback the callback, if null will do nothing
      */
     public void setOnDateTimeChangedListener(OnDateTimeChangedListener callback) {

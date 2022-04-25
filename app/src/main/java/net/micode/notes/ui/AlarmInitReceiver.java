@@ -30,13 +30,13 @@ import net.micode.notes.data.Notes.NoteColumns;
 
 public class AlarmInitReceiver extends BroadcastReceiver {
 
-    private static final String [] PROJECTION = new String [] {
-        NoteColumns.ID,
-        NoteColumns.ALERTED_DATE
+    private static final String[] PROJECTION = new String[]{
+            NoteColumns.ID,
+            NoteColumns.ALERTED_DATE
     };
 
-    private static final int COLUMN_ID                = 0;
-    private static final int COLUMN_ALERTED_DATE      = 1;
+    private static final int COLUMN_ID = 0;
+    private static final int COLUMN_ALERTED_DATE = 1;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -44,7 +44,7 @@ public class AlarmInitReceiver extends BroadcastReceiver {
         Cursor c = context.getContentResolver().query(Notes.CONTENT_NOTE_URI,
                 PROJECTION,
                 NoteColumns.ALERTED_DATE + ">? AND " + NoteColumns.TYPE + "=" + Notes.TYPE_NOTE,
-                new String[] { String.valueOf(currentDate) },
+                new String[]{String.valueOf(currentDate)},
                 null);
 
         if (c != null) {

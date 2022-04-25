@@ -30,12 +30,12 @@ import net.micode.notes.data.Notes.NoteColumns;
 
 
 public class FoldersListAdapter extends CursorAdapter {
-    public static final String [] PROJECTION = {
-        NoteColumns.ID,
-        NoteColumns.SNIPPET
+    public static final String[] PROJECTION = {
+            NoteColumns.ID,
+            NoteColumns.SNIPPET
     };
 
-    public static final int ID_COLUMN   = 0;
+    public static final int ID_COLUMN = 0;
     public static final int NAME_COLUMN = 1;
 
     public FoldersListAdapter(Context context, Cursor c) {

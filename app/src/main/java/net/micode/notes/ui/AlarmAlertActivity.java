@@ -130,6 +130,7 @@ public class AlarmAlertActivity extends Activity implements OnClickListener, OnD
         dialog.show().setOnDismissListener(this);
     }
 
+    @Override
     public void onClick(DialogInterface dialog, int which) {
         switch (which) {
             case DialogInterface.BUTTON_NEGATIVE:
@@ -143,6 +144,7 @@ public class AlarmAlertActivity extends Activity implements OnClickListener, OnD
         }
     }
 
+    @Override
     public void onDismiss(DialogInterface dialog) {
         stopAlarmSound();
         finish();

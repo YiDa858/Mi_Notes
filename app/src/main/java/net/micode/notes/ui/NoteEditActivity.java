@@ -85,6 +85,7 @@ public class NoteEditActivity extends Activity implements OnClickListener,
     }
 
     private static final Map<Integer, Integer> sBgSelectorBtnsMap = new HashMap<Integer, Integer>();
+
     static {
         sBgSelectorBtnsMap.put(R.id.iv_bg_yellow, ResourceParser.YELLOW);
         sBgSelectorBtnsMap.put(R.id.iv_bg_red, ResourceParser.RED);
@@ -94,6 +95,7 @@ public class NoteEditActivity extends Activity implements OnClickListener,
     }
 
     private static final Map<Integer, Integer> sBgSelectorSelectionMap = new HashMap<Integer, Integer>();
+
     static {
         sBgSelectorSelectionMap.put(ResourceParser.YELLOW, R.id.iv_bg_yellow_select);
         sBgSelectorSelectionMap.put(ResourceParser.RED, R.id.iv_bg_red_select);
@@ -103,6 +105,7 @@ public class NoteEditActivity extends Activity implements OnClickListener,
     }
 
     private static final Map<Integer, Integer> sFontSizeBtnsMap = new HashMap<Integer, Integer>();
+
     static {
         sFontSizeBtnsMap.put(R.id.ll_font_large, ResourceParser.TEXT_LARGE);
         sFontSizeBtnsMap.put(R.id.ll_font_small, ResourceParser.TEXT_SMALL);
@@ -111,6 +114,7 @@ public class NoteEditActivity extends Activity implements OnClickListener,
     }
 
     private static final Map<Integer, Integer> sFontSelectorSelectionMap = new HashMap<Integer, Integer>();
+
     static {
         sFontSelectorSelectionMap.put(ResourceParser.TEXT_LARGE, R.id.iv_large_select);
         sFontSelectorSelectionMap.put(ResourceParser.TEXT_SMALL, R.id.iv_small_select);
@@ -214,7 +218,7 @@ public class NoteEditActivity extends Activity implements OnClickListener,
             getWindow().setSoftInputMode(
                     WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN
                             | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        } else if(TextUtils.equals(Intent.ACTION_INSERT_OR_EDIT, intent.getAction())) {
+        } else if (TextUtils.equals(Intent.ACTION_INSERT_OR_EDIT, intent.getAction())) {
             // New note
             long folderId = intent.getLongExtra(Notes.INTENT_EXTRA_FOLDER_ID, 0);
             int widgetId = intent.getIntExtra(Notes.INTENT_EXTRA_WIDGET_ID,
@@ -309,7 +313,8 @@ public class NoteEditActivity extends Activity implements OnClickListener,
         } else {
             mNoteHeaderHolder.tvAlertDate.setVisibility(View.GONE);
             mNoteHeaderHolder.ivAlertIcon.setVisibility(View.GONE);
-        };
+        }
+        ;
     }
 
     @Override
@@ -350,7 +355,7 @@ public class NoteEditActivity extends Activity implements OnClickListener,
     }
 
     private boolean inRangeOfView(View view, MotionEvent ev) {
-        int []location = new int[2];
+        int[] location = new int[2];
         view.getLocationOnScreen(location);
         int x = location[0];
         int y = location[1];
@@ -358,8 +363,8 @@ public class NoteEditActivity extends Activity implements OnClickListener,
                 || ev.getX() > (x + view.getWidth())
                 || ev.getY() < y
                 || ev.getY() > (y + view.getHeight())) {
-                    return false;
-                }
+            return false;
+        }
         return true;
     }
 
@@ -383,7 +388,8 @@ public class NoteEditActivity extends Activity implements OnClickListener,
         for (int id : sFontSizeBtnsMap.keySet()) {
             View view = findViewById(id);
             view.setOnClickListener(this);
-        };
+        }
+        ;
         mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         mFontSizeId = mSharedPrefs.getInt(PREFERENCE_FONT_SIZE, ResourceParser.BG_DEFAULT_FONT_SIZE);
         /**
@@ -391,7 +397,7 @@ public class NoteEditActivity extends Activity implements OnClickListener,
          * The id may larger than the length of resources, in this case,
          * return the {@link ResourceParser#BG_DEFAULT_FONT_SIZE}
          */
-        if(mFontSizeId >= TextAppearanceResources.getResourcesSize()) {
+        if (mFontSizeId >= TextAppearanceResources.getResourcesSize()) {
             mFontSizeId = ResourceParser.BG_DEFAULT_FONT_SIZE;
         }
         mEditTextList = (LinearLayout) findViewById(R.id.note_edit_list);
@@ -400,7 +406,7 @@ public class NoteEditActivity extends Activity implements OnClickListener,
     @Override
     protected void onPause() {
         super.onPause();
-        if(saveNote()) {
+        if (saveNote()) {
             Log.d(TAG, "Note data was saved with length:" + mWorkingNote.getContent().length());
         }
         clearSettingState();
@@ -417,8 +423,8 @@ public class NoteEditActivity extends Activity implements OnClickListener,
             return;
         }
 
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, new int[] {
-            mWorkingNote.getWidgetId()
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, new int[]{
+                mWorkingNote.getWidgetId()
         });
 
         sendBroadcast(intent);
@@ -430,7 +436,7 @@ public class NoteEditActivity extends Activity implements OnClickListener,
         if (id == R.id.btn_set_bg_color) {
             mNoteBgColorSelector.setVisibility(View.VISIBLE);
             findViewById(sBgSelectorSelectionMap.get(mWorkingNote.getBgColorId())).setVisibility(
-                    -                    View.VISIBLE);
+                    -View.VISIBLE);
         } else if (sBgSelectorBtnsMap.containsKey(id)) {
             findViewById(sBgSelectorSelectionMap.get(mWorkingNote.getBgColorId())).setVisibility(
                     View.GONE);
@@ -454,7 +460,7 @@ public class NoteEditActivity extends Activity implements OnClickListener,
 
     @Override
     public void onBackPressed() {
-        if(clearSettingState()) {
+        if (clearSettingState()) {
             return;
         }
 
@@ -557,7 +563,7 @@ public class NoteEditActivity extends Activity implements OnClickListener,
         DateTimePickerDialog d = new DateTimePickerDialog(this, System.currentTimeMillis());
         d.setOnDateTimeSetListener(new OnDateTimeSetListener() {
             public void OnDateTimeSet(AlertDialog dialog, long date) {
-                mWorkingNote.setAlertDate(date	, true);
+                mWorkingNote.setAlertDate(date, true);
             }
         });
         d.show();
@@ -626,7 +632,7 @@ public class NoteEditActivity extends Activity implements OnClickListener,
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
             AlarmManager alarmManager = ((AlarmManager) getSystemService(ALARM_SERVICE));
             showAlertHeader();
-            if(!set) {
+            if (!set) {
                 alarmManager.cancel(pendingIntent);
             } else {
                 alarmManager.set(AlarmManager.RTC_WAKEUP, date, pendingIntent);
@@ -659,7 +665,7 @@ public class NoteEditActivity extends Activity implements OnClickListener,
 
         mEditTextList.removeViewAt(index);
         NoteEditText edit = null;
-        if(index == 0) {
+        if (index == 0) {
             edit = (NoteEditText) mEditTextList.getChildAt(0).findViewById(
                     R.id.et_edit_text);
         } else {
@@ -676,7 +682,7 @@ public class NoteEditActivity extends Activity implements OnClickListener,
         /**
          * Should not happen, check for debug
          */
-        if(index > mEditTextList.getChildCount()) {
+        if (index > mEditTextList.getChildCount()) {
             Log.e(TAG, "Index out of mEditTextList boundrary, should not happen");
         }
 
@@ -696,7 +702,7 @@ public class NoteEditActivity extends Activity implements OnClickListener,
         String[] items = text.split("\n");
         int index = 0;
         for (String item : items) {
-            if(!TextUtils.isEmpty(item)) {
+            if (!TextUtils.isEmpty(item)) {
                 mEditTextList.addView(getListItem(item, index));
                 index++;
             }
@@ -761,7 +767,7 @@ public class NoteEditActivity extends Activity implements OnClickListener,
             Log.e(TAG, "Wrong index, should not happen");
             return;
         }
-        if(hasText) {
+        if (hasText) {
             mEditTextList.getChildAt(index).findViewById(R.id.cb_edit_item).setVisibility(View.VISIBLE);
         } else {
             mEditTextList.getChildAt(index).findViewById(R.id.cb_edit_item).setVisibility(View.GONE);

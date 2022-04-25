@@ -174,12 +174,16 @@ public class WorkingNote {
         }
     }
 
-    public static WorkingNote createEmptyNote(Context context, long folderId, int widgetId,
-            int widgetType, int defaultBgColorId) {
+    public static WorkingNote createEmptyNote(Context context, long folderId, int widgetId, int widgetType, int defaultBgColorId) {
+        // 新建一个WorkingNote对象，传入便签内容 context 和文件夹Id folderId
         WorkingNote note = new WorkingNote(context, folderId);
+        // 设置便签背景颜色
         note.setBgColorId(defaultBgColorId);
+        // 设置便签文字大小
         note.setWidgetId(widgetId);
+        // 设置便签文字字体
         note.setWidgetType(widgetType);
+        // 返回构造好的对象
         return note;
     }
 
@@ -282,6 +286,7 @@ public class WorkingNote {
     }
 
     public void setWorkingText(String text) {
+        // 若传入的文本text与之前的文本内容不同则修改
         if (!TextUtils.equals(mContent, text)) {
             mContent = text;
             mNote.setTextData(DataColumns.CONTENT, mContent);

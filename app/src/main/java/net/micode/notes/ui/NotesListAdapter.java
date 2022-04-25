@@ -41,7 +41,9 @@ public class NotesListAdapter extends CursorAdapter {
     public static class AppWidgetAttribute {
         public int widgetId;
         public int widgetType;
-    };
+    }
+
+    ;
 
     public NotesListAdapter(Context context) {
         super(context, null);

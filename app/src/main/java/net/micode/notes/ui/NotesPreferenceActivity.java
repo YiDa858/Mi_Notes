@@ -245,8 +245,8 @@ public class NotesPreferenceActivity extends PreferenceActivity {
             public void onClick(View v) {
                 mHasAddedAccount = true;
                 Intent intent = new Intent("android.settings.ADD_ACCOUNT_SETTINGS");
-                intent.putExtra(AUTHORITIES_FILTER_KEY, new String[] {
-                    "gmail-ls"
+                intent.putExtra(AUTHORITIES_FILTER_KEY, new String[]{
+                        "gmail-ls"
                 });
                 startActivityForResult(intent, -1);
                 dialog.dismiss();
@@ -265,7 +265,7 @@ public class NotesPreferenceActivity extends PreferenceActivity {
         subtitleTextView.setText(getString(R.string.preferences_dialog_change_account_warn_msg));
         dialogBuilder.setCustomTitle(titleView);
 
-        CharSequence[] menuItemArray = new CharSequence[] {
+        CharSequence[] menuItemArray = new CharSequence[]{
                 getString(R.string.preferences_menu_change_account),
                 getString(R.string.preferences_menu_remove_account),
                 getString(R.string.preferences_menu_cancel)

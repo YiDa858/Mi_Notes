@@ -67,7 +67,7 @@ public class NotesListItem extends LinearLayout {
         } else if (data.getParentId() == Notes.ID_CALL_RECORD_FOLDER) {
             mCallName.setVisibility(View.VISIBLE);
             mCallName.setText(data.getCallName());
-            mTitle.setTextAppearance(context,R.style.TextAppearanceSecondaryItem);
+            mTitle.setTextAppearance(context, R.style.TextAppearanceSecondaryItem);
             mTitle.setText(DataUtils.getFormattedSnippet(data.getSnippet()));
             if (data.hasAlert()) {
                 mAlert.setImageResource(R.drawable.clock);
@@ -82,7 +82,7 @@ public class NotesListItem extends LinearLayout {
             if (data.getType() == Notes.TYPE_FOLDER) {
                 mTitle.setText(data.getSnippet()
                         + context.getString(R.string.format_folder_files_count,
-                                data.getNotesCount()));
+                        data.getNotesCount()));
                 mAlert.setVisibility(View.GONE);
             } else {
                 mTitle.setText(DataUtils.getFormattedSnippet(data.getSnippet()));

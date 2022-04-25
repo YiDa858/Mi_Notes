@@ -42,11 +42,12 @@ public class NoteEditText extends EditText {
     private int mIndex;
     private int mSelectionStartBeforeDelete;
 
-    private static final String SCHEME_TEL = "tel:" ;
-    private static final String SCHEME_HTTP = "http:" ;
-    private static final String SCHEME_EMAIL = "mailto:" ;
+    private static final String SCHEME_TEL = "tel:";
+    private static final String SCHEME_HTTP = "http:";
+    private static final String SCHEME_EMAIL = "mailto:";
 
     private static final Map<String, Integer> sSchemaActionResMap = new HashMap<String, Integer>();
+
     static {
         sSchemaActionResMap.put(SCHEME_TEL, R.string.note_link_tel);
         sSchemaActionResMap.put(SCHEME_HTTP, R.string.note_link_web);
@@ -140,7 +141,7 @@ public class NoteEditText extends EditText {
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        switch(keyCode) {
+        switch (keyCode) {
             case KeyEvent.KEYCODE_DEL:
                 if (mOnTextViewChangeListener != null) {
                     if (0 == mSelectionStartBeforeDelete && mIndex != 0) {
@@ -191,8 +192,8 @@ public class NoteEditText extends EditText {
             final URLSpan[] urls = ((Spanned) getText()).getSpans(min, max, URLSpan.class);
             if (urls.length == 1) {
                 int defaultResId = 0;
-                for(String schema: sSchemaActionResMap.keySet()) {
-                    if(urls[0].getURL().indexOf(schema) >= 0) {
+                for (String schema : sSchemaActionResMap.keySet()) {
+                    if (urls[0].getURL().indexOf(schema) >= 0) {
                         defaultResId = sSchemaActionResMap.get(schema);
                         break;
                     }
