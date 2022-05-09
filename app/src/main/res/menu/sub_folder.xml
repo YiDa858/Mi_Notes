@@ -15,10 +15,9 @@
      limitations under the License.
 -->
 
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/menu_new_note"
-        android:title="@string/notelist_menu_new"/>
+        android:title="@string/notelist_menu_new" />
 </menu>

@@ -233,11 +233,11 @@ public class NotesListActivity extends Activity implements OnClickListener, OnIt
     }
 
     private void initResources() {
-        mContentResolver = this.getContentResolver();   // 类似数据库句柄
+        mContentResolver = this.getContentResolver();   // 数据库接口
         mBackgroundQueryHandler = new BackgroundQueryHandler(this.getContentResolver());    // 后台查询任务
         mCurrentFolderId = Notes.ID_ROOT_FOLDER;
 
-        mNotesListView = (ListView) findViewById(R.id.notes_list);  // 创建NotesList视图(CTRL跟进)
+        mNotesListView = (ListView) findViewById(R.id.notes_list);  // 创建NotesList视图
 
         // LayoutInflater布局服务,利用from()获取LayoutInflater实例,并用inflate()加载布局
         mNotesListView.addFooterView(LayoutInflater.from(this).inflate(R.layout.note_list_footer, null), null, false);   // 用于通知用户列表划到底了的视图元素
@@ -265,6 +265,7 @@ public class NotesListActivity extends Activity implements OnClickListener, OnIt
         private ActionMode mActionMode;
         private MenuItem mMoveMenu;
 
+        @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             getMenuInflater().inflate(R.menu.note_list_options, menu);
             menu.findItem(R.id.delete).setOnMenuItemClickListener(this);
@@ -438,8 +439,6 @@ public class NotesListActivity extends Activity implements OnClickListener, OnIt
         }
 
     }
-
-    ;
 
     private void startAsyncNotesListQuery() {
         String selection = (mCurrentFolderId == Notes.ID_ROOT_FOLDER) ? ROOT_FOLDER_SELECTION

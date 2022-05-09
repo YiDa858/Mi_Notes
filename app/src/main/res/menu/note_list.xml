@@ -15,19 +15,18 @@
      limitations under the License.
 -->
 
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_new_folder"
-        android:title="@string/menu_create_folder"/>
+        android:title="@string/menu_create_folder" />
 
     <item
         android:id="@+id/menu_export_text"
-        android:title="@string/menu_export_text"/>
+        android:title="@string/menu_export_text" />
 
     <item
         android:id="@+id/menu_sync"
-        android:title="@string/menu_sync"/>
+        android:title="@string/menu_sync" />
 
     <item
         android:id="@+id/menu_setting"
@@ -35,5 +34,5 @@
 
     <item
         android:id="@+id/menu_search"
-        android:title="@string/menu_search"/>
+        android:title="@string/menu_search" />
 </menu>

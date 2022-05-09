@@ -293,8 +293,7 @@ public class NoteEditActivity extends Activity implements OnClickListener,
                         | DateUtils.FORMAT_SHOW_YEAR));
 
         /**
-         * TODO: Add the menu for setting alert. Currently disable it because the DateTimePicker
-         * is not ready
+         * TODO: Add the menu for setting alert. Currently disable it because the DateTimePicker is not ready
          */
         showAlertHeader();
     }
@@ -431,6 +430,7 @@ public class NoteEditActivity extends Activity implements OnClickListener,
         setResult(RESULT_OK, intent);
     }
 
+    @Override
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.btn_set_bg_color) {
@@ -479,6 +479,7 @@ public class NoteEditActivity extends Activity implements OnClickListener,
         return false;
     }
 
+    @Override
     public void onBackgroundColorChanged() {
         findViewById(sBgSelectorSelectionMap.get(mWorkingNote.getBgColorId())).setVisibility(
                 View.VISIBLE);
