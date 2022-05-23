@@ -80,8 +80,7 @@ public class DataUtils {
         resolver.update(ContentUris.withAppendedId(Notes.CONTENT_NOTE_URI, id), values, null, null);
     }
 
-    public static boolean batchMoveToFolder(ContentResolver resolver, HashSet<Long> ids,
-            long folderId) {
+    public static boolean batchMoveToFolder(ContentResolver resolver, HashSet<Long> ids, long folderId) {
         if (ids == null) {
             Log.d(TAG, "the ids is null");
             return true;

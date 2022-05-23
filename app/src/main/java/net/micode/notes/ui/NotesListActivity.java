@@ -440,9 +440,17 @@ public class NotesListActivity extends Activity implements OnClickListener, OnIt
 
     }
 
+    /**
+     * 启动异步Notes列表查询
+     */
     private void startAsyncNotesListQuery() {
-        String selection = (mCurrentFolderId == Notes.ID_ROOT_FOLDER) ? ROOT_FOLDER_SELECTION
-                : NORMAL_SELECTION;
+        // 若当前文件夹id为ID_ROOT_FOLDER，则执行根目录搜索，否则执行普通搜索
+        // 根目录搜索语句
+        // (NoteColumns.TYPE<>Notes.TYPE_SYSTEM AND NoteColumns.PARENT_ID=?) OR (NoteColumns.ID=Notes.ID_CALL_RECORD_FOLDER AND NoteColumns.NOTES_COUNT>0)
+        // 普通搜索语句
+        // NoteColumns.PARENT_ID=?
+        String selection = (mCurrentFolderId == Notes.ID_ROOT_FOLDER) ? ROOT_FOLDER_SELECTION : NORMAL_SELECTION;
+        // 开始查询
         mBackgroundQueryHandler.startQuery(FOLDER_NOTE_LIST_QUERY_TOKEN, null,
                 Notes.CONTENT_NOTE_URI, NoteItemData.PROJECTION, selection, new String[]{
                         String.valueOf(mCurrentFolderId)
@@ -457,9 +465,12 @@ public class NotesListActivity extends Activity implements OnClickListener, OnIt
         @Override
         protected void onQueryComplete(int token, Object cookie, Cursor cursor) {
             switch (token) {
+                // 若为FOLDER_NOTE_LIST_QUERY，则调用changeCursor将基础游标改为新游标
                 case FOLDER_NOTE_LIST_QUERY_TOKEN:
                     mNotesListAdapter.changeCursor(cursor);
                     break;
+                // 若为FOLDER_LIST_QUERY
+                // 若游标不为空且指向的行数目大于零（查询结果不为空）
                 case FOLDER_LIST_QUERY_TOKEN:
                     if (cursor != null && cursor.getCount() > 0) {
                         showFolderListMenu(cursor);
@@ -479,15 +490,11 @@ public class NotesListActivity extends Activity implements OnClickListener, OnIt
         final FoldersListAdapter adapter = new FoldersListAdapter(this, cursor);
         builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
 
+            @Override
             public void onClick(DialogInterface dialog, int which) {
-                DataUtils.batchMoveToFolder(mContentResolver,
-                        mNotesListAdapter.getSelectedItemIds(), adapter.getItemId(which));
-                Toast.makeText(
-                        NotesListActivity.this,
-                        getString(R.string.format_move_notes_to_folder,
-                                mNotesListAdapter.getSelectedCount(),
-                                adapter.getFolderName(NotesListActivity.this, which)),
-                        Toast.LENGTH_SHORT).show();
+                // 批量移动到文件夹
+                DataUtils.batchMoveToFolder(mContentResolver, mNotesListAdapter.getSelectedItemIds(), adapter.getItemId(which));
+                Toast.makeText(NotesListActivity.this, getString(R.string.format_move_notes_to_folder, mNotesListAdapter.getSelectedCount(), adapter.getFolderName(NotesListActivity.this, which)), Toast.LENGTH_SHORT).show();
                 mModeCallBack.finishActionMode();
             }
         });
@@ -594,6 +601,7 @@ public class NotesListActivity extends Activity implements OnClickListener, OnIt
         mTitleBar.setVisibility(View.VISIBLE);
     }
 
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_new_note:
@@ -748,6 +756,7 @@ public class NotesListActivity extends Activity implements OnClickListener, OnIt
 
     //声明监听器，建立菜单，包括名称，视图，删除操作，更改名称操作
     private final OnCreateContextMenuListener mFolderOnCreateContextMenuListener = new OnCreateContextMenuListener() {
+        @Override
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
             if (mFocusNoteDataItem != null) {
                 menu.setHeaderTitle(mFocusNoteDataItem.getSnippet());
