@@ -36,6 +36,8 @@ public class NotesDatabaseHelper extends SQLiteOpenHelper {
         public static final String NOTE = "note";
 
         public static final String DATA = "data";
+
+        public static final String PASSWROD = "password";
     }
 
     private static final String TAG = "NotesDatabaseHelper";
@@ -77,6 +79,20 @@ public class NotesDatabaseHelper extends SQLiteOpenHelper {
             DataColumns.DATA4 + " TEXT NOT NULL DEFAULT ''," +
             DataColumns.DATA5 + " TEXT NOT NULL DEFAULT ''" +
         ")";
+
+    private static final String CREATE_PASSWORD_TABLE_SQL =
+            "CREATE TABLE " + TABLE.PASSWROD + "(" +
+                    DataColumns.ID + " INTEGER PRIMARY KEY," +
+                    DataColumns.NOTE_ID + " INTEGER NOT NULL DEFAULT 0," +
+                    NoteColumns.CREATED_DATE + " INTEGER NOT NULL DEFAULT (strftime('%s','now') * 1000)," +
+                    NoteColumns.MODIFIED_DATE + " INTEGER NOT NULL DEFAULT (strftime('%s','now') * 1000)," +
+                    DataColumns.CONTENT + " TEXT NOT NULL DEFAULT ''," +
+                    DataColumns.DATA1 + " INTEGER," +
+                    DataColumns.DATA2 + " INTEGER," +
+                    DataColumns.DATA3 + " TEXT NOT NULL DEFAULT ''," +
+                    DataColumns.DATA4 + " TEXT NOT NULL DEFAULT ''," +
+                    DataColumns.DATA5 + " TEXT NOT NULL DEFAULT ''" +
+                    ")";
 
     private static final String CREATE_DATA_NOTE_ID_INDEX_SQL =
         "CREATE INDEX IF NOT EXISTS note_id_index ON " +

@@ -165,6 +165,12 @@ public class Notes {
          * <P> Type : INTEGER (long) </P>
          */
         public static final String VERSION = "version";
+
+        /**
+         * Sign to indicate whether encrypted or not
+         * <P> Type: INTEGER </P>
+         */
+        public static final String IS_ENCRYPTED = "is_encrypted";
     }
 
     public interface DataColumns {
@@ -239,6 +245,26 @@ public class Notes {
          * <P> Type: TEXT </P>
          */
         public static final String DATA5 = "data5";
+    }
+
+    public  interface PasswordColums {
+        /**
+         * The unique ID for a row
+         * <P> Type: INTEGER (long) </P>
+         */
+        public static final String ID = "_id";
+
+        /**
+         * The reference id to note that this data belongs to
+         * <P> Type: INTEGER (long) </P>
+         */
+        public static final String NOTE_ID = "note_id";
+
+        /**
+         * The Hash values of note_id+password
+         * <P> Type: INTEGER (long) </P>
+         */
+        public static final String PASSWORD = "password";
     }
 
     public static final class TextNote implements DataColumns {

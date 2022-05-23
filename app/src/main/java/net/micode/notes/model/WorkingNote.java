@@ -28,6 +28,7 @@ import net.micode.notes.data.Notes.CallNote;
 import net.micode.notes.data.Notes.DataColumns;
 import net.micode.notes.data.Notes.DataConstants;
 import net.micode.notes.data.Notes.NoteColumns;
+import net.micode.notes.data.Notes.PasswordColums;
 import net.micode.notes.data.Notes.TextNote;
 import net.micode.notes.tool.ResourceParser.NoteBgResources;
 
@@ -78,7 +79,14 @@ public class WorkingNote {
             NoteColumns.BG_COLOR_ID,
             NoteColumns.WIDGET_ID,
             NoteColumns.WIDGET_TYPE,
-            NoteColumns.MODIFIED_DATE
+            NoteColumns.MODIFIED_DATE,
+            NoteColumns.IS_ENCRYPTED
+    };
+
+    public static final String[] PASSWORD_PROJECTION = new String[] {
+            PasswordColums.ID,
+            PasswordColums.NOTE_ID,
+            PasswordColums.PASSWORD
     };
 
     private static final int DATA_ID_COLUMN = 0;
