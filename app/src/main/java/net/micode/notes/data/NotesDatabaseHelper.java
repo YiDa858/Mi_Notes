@@ -84,7 +84,7 @@ public class NotesDatabaseHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + TABLE.PASSWROD + "(" +
                     PasswordColumns.ID + " INTEGER PRIMARY KEY," +
                     PasswordColumns.NOTE_ID + " INTEGER NOT NULL DEFAULT 0," +
-                    PasswordColumns.PASSWORD + " INTEGER NOT NULL DEFAULT 0," +
+                    PasswordColumns.PASSWORD + " INTEGER NOT NULL DEFAULT 0" +
                     ")";
 
     private static final String CREATE_DATA_NOTE_ID_INDEX_SQL =
