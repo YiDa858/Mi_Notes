@@ -247,7 +247,7 @@ public class Notes {
         public static final String DATA5 = "data5";
     }
 
-    public  interface PasswordColums {
+    public  interface PasswordColumns {
         /**
          * The unique ID for a row
          * <P> Type: INTEGER (long) </P>
