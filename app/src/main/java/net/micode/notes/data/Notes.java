@@ -265,6 +265,18 @@ public class Notes {
          * <P> Type: INTEGER (long) </P>
          */
         public static final String PASSWORD = "password";
+
+        /**
+         * Security question
+         * <P> Type: TEXT </P>
+         */
+        public static final String QUESTION = "question";
+
+        /**
+         * The answer to security question
+         * <P> Type: TEXT </P>
+         */
+        public static final String ANSWER = "answer";
     }
 
     public static final class TextNote implements DataColumns {
