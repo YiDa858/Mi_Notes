@@ -61,6 +61,11 @@ public class Notes {
      */
     public static final Uri CONTENT_DATA_URI = Uri.parse("content://" + AUTHORITY + "/data");
 
+    /**
+     * Uri to query password
+     */
+    public static final Uri CONTENT_PASSWORD_URI = Uri.parse("content://" + AUTHORITY + "/password");
+
     public interface NoteColumns {
         /**
          * The unique ID for a row
@@ -252,7 +257,7 @@ public class Notes {
          * The unique ID for a row
          * <P> Type: INTEGER (long) </P>
          */
-        public static final String ID = "_id";
+        public static final String _ID = "_id";
 
         /**
          * The reference id to note that this data belongs to

@@ -42,13 +42,16 @@ public class NotesProvider extends ContentProvider {
 
     private static final String TAG = "NotesProvider";
 
-    private static final int URI_NOTE            = 1;
-    private static final int URI_NOTE_ITEM       = 2;
-    private static final int URI_DATA            = 3;
-    private static final int URI_DATA_ITEM       = 4;
+    private static final int URI_NOTE = 1;
+    private static final int URI_NOTE_ITEM = 2;
+    private static final int URI_DATA = 3;
+    private static final int URI_DATA_ITEM = 4;
 
-    private static final int URI_SEARCH          = 5;
-    private static final int URI_SEARCH_SUGGEST  = 6;
+
+    private static final int URI_SEARCH = 5;
+    private static final int URI_SEARCH_SUGGEST = 6;
+    private static final int URI_PASSWORD = 7;
+    private static final int URI_PASSWORD_ITEM = 8;
 
     static {
         mMatcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -56,7 +59,9 @@ public class NotesProvider extends ContentProvider {
         mMatcher.addURI(Notes.AUTHORITY, "note/#", URI_NOTE_ITEM);
         mMatcher.addURI(Notes.AUTHORITY, "data", URI_DATA);
         mMatcher.addURI(Notes.AUTHORITY, "data/#", URI_DATA_ITEM);
-        mMatcher.addURI(Notes.AUTHORITY, "search", URI_SEARCH);
+        mMatcher.addURI(Notes.AUTHORITY, "password", URI_SEARCH);
+        mMatcher.addURI(Notes.AUTHORITY, "password", URI_PASSWORD);
+        mMatcher.addURI(Notes.AUTHORITY, "password/#", URI_PASSWORD_ITEM);
         mMatcher.addURI(Notes.AUTHORITY, SearchManager.SUGGEST_URI_PATH_QUERY, URI_SEARCH_SUGGEST);
         mMatcher.addURI(Notes.AUTHORITY, SearchManager.SUGGEST_URI_PATH_QUERY + "/*", URI_SEARCH_SUGGEST);
     }
@@ -66,18 +71,18 @@ public class NotesProvider extends ContentProvider {
      * we will trim '\n' and white space in order to show more information.
      */
     private static final String NOTES_SEARCH_PROJECTION = NoteColumns.ID + ","
-        + NoteColumns.ID + " AS " + SearchManager.SUGGEST_COLUMN_INTENT_EXTRA_DATA + ","
-        + "TRIM(REPLACE(" + NoteColumns.SNIPPET + ", x'0A','')) AS " + SearchManager.SUGGEST_COLUMN_TEXT_1 + ","
-        + "TRIM(REPLACE(" + NoteColumns.SNIPPET + ", x'0A','')) AS " + SearchManager.SUGGEST_COLUMN_TEXT_2 + ","
-        + R.drawable.search_result + " AS " + SearchManager.SUGGEST_COLUMN_ICON_1 + ","
-        + "'" + Intent.ACTION_VIEW + "' AS " + SearchManager.SUGGEST_COLUMN_INTENT_ACTION + ","
-        + "'" + Notes.TextNote.CONTENT_TYPE + "' AS " + SearchManager.SUGGEST_COLUMN_INTENT_DATA;
+            + NoteColumns.ID + " AS " + SearchManager.SUGGEST_COLUMN_INTENT_EXTRA_DATA + ","
+            + "TRIM(REPLACE(" + NoteColumns.SNIPPET + ", x'0A','')) AS " + SearchManager.SUGGEST_COLUMN_TEXT_1 + ","
+            + "TRIM(REPLACE(" + NoteColumns.SNIPPET + ", x'0A','')) AS " + SearchManager.SUGGEST_COLUMN_TEXT_2 + ","
+            + R.drawable.search_result + " AS " + SearchManager.SUGGEST_COLUMN_ICON_1 + ","
+            + "'" + Intent.ACTION_VIEW + "' AS " + SearchManager.SUGGEST_COLUMN_INTENT_ACTION + ","
+            + "'" + Notes.TextNote.CONTENT_TYPE + "' AS " + SearchManager.SUGGEST_COLUMN_INTENT_DATA;
 
     private static String NOTES_SNIPPET_SEARCH_QUERY = "SELECT " + NOTES_SEARCH_PROJECTION
-        + " FROM " + TABLE.NOTE
-        + " WHERE " + NoteColumns.SNIPPET + " LIKE ?"
-        + " AND " + NoteColumns.PARENT_ID + "<>" + Notes.ID_TRASH_FOLER
-        + " AND " + NoteColumns.TYPE + "=" + Notes.TYPE_NOTE;
+            + " FROM " + TABLE.NOTE
+            + " WHERE " + NoteColumns.SNIPPET + " LIKE ?"
+            + " AND " + NoteColumns.PARENT_ID + "<>" + Notes.ID_TRASH_FOLER
+            + " AND " + NoteColumns.TYPE + "=" + Notes.TYPE_NOTE;
 
     @Override
     public boolean onCreate() {
@@ -87,7 +92,7 @@ public class NotesProvider extends ContentProvider {
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
-            String sortOrder) {
+                        String sortOrder) {
         Cursor c = null;
         SQLiteDatabase db = mHelper.getReadableDatabase();
         String id = null;
@@ -133,7 +138,7 @@ public class NotesProvider extends ContentProvider {
                 try {
                     searchString = String.format("%%%s%%", searchString);
                     c = db.rawQuery(NOTES_SNIPPET_SEARCH_QUERY,
-                            new String[] { searchString });
+                            new String[]{searchString});
                 } catch (IllegalStateException ex) {
                     Log.e(TAG, "got exception: " + ex.toString());
                 }
@@ -162,6 +167,9 @@ public class NotesProvider extends ContentProvider {
                     Log.d(TAG, "Wrong data format without note id:" + values.toString());
                 }
                 insertedId = dataId = db.insert(TABLE.DATA, null, values);
+                break;
+            case URI_PASSWORD:
+                insertedId = noteId = db.insert(TABLE.PASSWORD, null, values);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI " + uri);
@@ -253,6 +261,12 @@ public class NotesProvider extends ContentProvider {
                 count = db.update(TABLE.DATA, values, DataColumns.ID + "=" + id
                         + parseSelection(selection), selectionArgs);
                 updateData = true;
+                break;
+            case URI_PASSWORD:
+                Log.d(TAG, "update: 341");
+                break;
+            case URI_PASSWORD_ITEM:
+                Log.d(TAG, "update: 123");
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI " + uri);

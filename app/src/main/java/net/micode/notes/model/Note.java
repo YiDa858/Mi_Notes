@@ -117,6 +117,7 @@ public class Note {
          * {@link NoteColumns#MODIFIED_DATE}. For data safety, though update note fails, we also update the
          * note data info
          */
+        Log.d(TAG, "syncNote: " + Notes.CONTENT_NOTE_URI);
         if (context.getContentResolver().update(
                 ContentUris.withAppendedId(Notes.CONTENT_NOTE_URI, noteId), mNoteDiffValues, null,
                 null) == 0) {
@@ -127,6 +128,33 @@ public class Note {
 
         if (mNoteData.isLocalModified()
                 && (mNoteData.pushIntoContentResolver(context, noteId) == null)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public boolean syncNote(Context context, long noteId, Uri uri, ContentValues NoteDiffValues) {
+        if (noteId <= 0) {
+            throw new IllegalArgumentException("Wrong note id:" + noteId);
+        }
+
+        if (!isLocalModified()) {
+            return true;
+        }
+
+        /**
+         * In theory, once data changed, the note should be updated on {@link NoteColumns#LOCAL_MODIFIED} and
+         * {@link NoteColumns#MODIFIED_DATE}. For data safety, though update note fails, we also update the
+         * note data info
+         */
+        if (context.getContentResolver().insert(uri, NoteDiffValues) == null) {
+            Log.e(TAG, "Update note error, should not happen");
+            // Do not return, fall through
+        }
+        NoteDiffValues.clear();
+
+        if (mNoteData.isLocalModified() && (mNoteData.pushIntoContentResolver(context, noteId) == null)) {
             return false;
         }
 

@@ -495,15 +495,19 @@ public class NoteEditActivity extends Activity implements OnClickListener,
         // 修改下拉栏表项
         if (mWorkingNote.getFolderId() == Notes.ID_CALL_RECORD_FOLDER) {
             if (mWorkingNote.hasPassword()) {
+                Log.d(TAG, "onPrepareOptionsMenu: call_note_edit_has_pass");
                 getMenuInflater().inflate(R.menu.call_note_edit_has_pass, menu);
             } else {
+                Log.d(TAG, "onPrepareOptionsMenu: call_note_edit_no_pass");
                 getMenuInflater().inflate(R.menu.call_note_edit_no_pass, menu);
             }
         } else {
             if (mWorkingNote.hasPassword()) {
+                Log.d(TAG, "onPrepareOptionsMenu: note_edit_has_pass");
                 getMenuInflater().inflate(R.menu.note_edit_has_pass, menu);
             } else {
-                getMenuInflater().inflate(R.menu.call_note_edit_no_pass, menu);
+                Log.d(TAG, "onPrepareOptionsMenu: note_edit_no_pass");
+                getMenuInflater().inflate(R.menu.note_edit_no_pass, menu);
             }
         }
         if (mWorkingNote.getCheckListMode() == TextNote.MODE_CHECK_LIST) {
@@ -562,10 +566,12 @@ public class NoteEditActivity extends Activity implements OnClickListener,
                 mWorkingNote.setAlertDate(0, false);
                 break;
             case R.id.menu_set_password:
+                Log.d(TAG, "onOptionsItemSelected: yes");
                 if (!mWorkingNote.hasPassword()) {
                     String password = "123";
                     mWorkingNote.setPassword(password);
                 } else {
+                    Log.d(TAG, "onOptionsItemSelected: no");
                     Toast.makeText(this, "您已经设置过密码了", Toast.LENGTH_SHORT).show();
                 }
             default:

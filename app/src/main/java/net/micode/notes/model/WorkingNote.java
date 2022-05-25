@@ -18,8 +18,10 @@ package net.micode.notes.model;
 
 import android.appwidget.AppWidgetManager;
 import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -30,6 +32,7 @@ import net.micode.notes.data.Notes.DataConstants;
 import net.micode.notes.data.Notes.NoteColumns;
 import net.micode.notes.data.Notes.PasswordColumns;
 import net.micode.notes.data.Notes.TextNote;
+import net.micode.notes.data.NotesProvider;
 import net.micode.notes.tool.ResourceParser.NoteBgResources;
 
 
@@ -65,7 +68,7 @@ public class WorkingNote {
 
     private NoteSettingChangedListener mNoteSettingStatusListener;
 
-    public static final String[] DATA_PROJECTION = new String[] {
+    public static final String[] DATA_PROJECTION = new String[]{
             DataColumns.ID,
             DataColumns.CONTENT,
             DataColumns.MIME_TYPE,
@@ -75,7 +78,7 @@ public class WorkingNote {
             DataColumns.DATA4,
     };
 
-    public static final String[] NOTE_PROJECTION = new String[] {
+    public static final String[] NOTE_PROJECTION = new String[]{
             NoteColumns.PARENT_ID,
             NoteColumns.ALERTED_DATE,
             NoteColumns.BG_COLOR_ID,
@@ -85,8 +88,8 @@ public class WorkingNote {
             NoteColumns.IS_ENCRYPTED
     };
 
-    public static final String[] PASSWORD_PROJECTION = new String[] {
-            PasswordColumns.ID,
+    public static final String[] PASSWORD_PROJECTION = new String[]{
+            PasswordColumns._ID,
             PasswordColumns.NOTE_ID,
             PasswordColumns.PASSWORD
     };
@@ -167,8 +170,8 @@ public class WorkingNote {
 
     private void loadNoteData() {
         Cursor cursor = mContext.getContentResolver().query(Notes.CONTENT_DATA_URI, DATA_PROJECTION,
-                DataColumns.NOTE_ID + "=?", new String[] {
-                    String.valueOf(mNoteId)
+                DataColumns.NOTE_ID + "=?", new String[]{
+                        String.valueOf(mNoteId)
                 }, null);
 
         if (cursor != null) {
@@ -266,7 +269,7 @@ public class WorkingNote {
         mIsDeleted = mark;
         if (mWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID
                 && mWidgetType != Notes.TYPE_WIDGET_INVALIDE && mNoteSettingStatusListener != null) {
-                mNoteSettingStatusListener.onWidgetChanged();
+            mNoteSettingStatusListener.onWidgetChanged();
         }
     }
 
@@ -315,9 +318,13 @@ public class WorkingNote {
     public void setPassword(String password) {
         if (!mIsEncrypted) {
             mNote.setNoteValue(NoteColumns.IS_ENCRYPTED, String.valueOf(1));
+            mNote.syncNote(mContext, mNoteId);
             int hash = (mNoteId + password).hashCode();
-            mNote.setNoteValue(PasswordColumns.NOTE_ID, String.valueOf(mNoteId));
-            mNote.setNoteValue(PasswordColumns.PASSWORD, String.valueOf(hash));
+            ContentValues mNoteDiffValues = new ContentValues();
+            mNoteDiffValues.put(PasswordColumns.NOTE_ID, String.valueOf(mNoteId));
+            mNoteDiffValues.put(PasswordColumns.PASSWORD, String.valueOf(hash));
+            mNote.syncNote(mContext, mNoteId, Notes.CONTENT_PASSWORD_URI, mNoteDiffValues);
+            Log.d(TAG, "setPassword: set password successfully :) ");
         }
     }
 
@@ -332,6 +339,10 @@ public class WorkingNote {
     }
 
     public boolean hasPassword() {
+//        String selection = "SELECT * FROM password WHERE note_id = ?";
+//        String[] note_id = {String.valueOf(0)};
+//        NotesProvider np = new NotesProvider();
+//        Cursor cursor = np.query(Uri.parse("content://micode_notes/note"), PASSWORD_PROJECTION, selection, note_id, null);
         return mIsEncrypted;
     }
 
@@ -397,6 +408,7 @@ public class WorkingNote {
 
         /**
          * Call when switch between check list mode and normal mode
+         *
          * @param oldMode is previous mode before change
          * @param newMode is new mode
          */
