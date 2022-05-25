@@ -44,4 +44,8 @@
     <item
         android:id="@+id/menu_delete_remind"
         android:title="@string/menu_remove_remind" />
+
+    <item
+        android:id="menu_set_password"
+        android:title="@string/menu_set_password" />
 </menu>
