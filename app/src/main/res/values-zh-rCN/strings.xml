@@ -120,6 +120,8 @@
     <string name="datetime_dialog_ok">设置</string>
     <string name="datetime_dialog_cancel">取消</string>
     <string name="menu_set_password">设置密码</string>
+    <string name="menu_change_password">修改密码</string>
+    <string name="menu_delete_password">删除密码</string>
     <plurals name="search_results_title">
         <item quantity="other"><xliff:g id="NUMBER">%1$s</xliff:g> 条符合“<xliff:g id="SEARCH">%2$s</xliff:g>”的搜索结果</item>
     </plurals>

@@ -18,10 +18,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/menu_new_note"
-        android:title="@string/notelist_menu_new" />
-
-    <item
         android:id="@+id/menu_delete"
         android:title="@string/menu_delete" />
 
@@ -50,6 +46,10 @@
         android:title="@string/menu_remove_remind" />
 
     <item
-        android:id="@+id/menu_set_password"
-        android:title="@string/menu_set_password" />
+        android:id="@+id/menu_change_password"
+        android:title="@string/menu_change_password" />
+
+    <item
+        android:id="@+id/menu_delete_password"
+        android:title="@string/menu_delete_password" />
 </menu>

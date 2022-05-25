@@ -492,10 +492,19 @@ public class NoteEditActivity extends Activity implements OnClickListener,
         }
         clearSettingState();
         menu.clear();
+        // 修改下拉栏表项
         if (mWorkingNote.getFolderId() == Notes.ID_CALL_RECORD_FOLDER) {
-            getMenuInflater().inflate(R.menu.call_note_edit, menu);
+            if (mWorkingNote.hasPassword()) {
+                getMenuInflater().inflate(R.menu.call_note_edit_has_pass, menu);
+            } else {
+                getMenuInflater().inflate(R.menu.call_note_edit_no_pass, menu);
+            }
         } else {
-            getMenuInflater().inflate(R.menu.note_edit, menu);
+            if (mWorkingNote.hasPassword()) {
+                getMenuInflater().inflate(R.menu.note_edit_has_pass, menu);
+            } else {
+                getMenuInflater().inflate(R.menu.call_note_edit_no_pass, menu);
+            }
         }
         if (mWorkingNote.getCheckListMode() == TextNote.MODE_CHECK_LIST) {
             menu.findItem(R.id.menu_list_mode).setTitle(R.string.menu_normal_mode);
