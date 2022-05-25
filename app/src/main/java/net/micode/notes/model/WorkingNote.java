@@ -28,7 +28,7 @@ import net.micode.notes.data.Notes.CallNote;
 import net.micode.notes.data.Notes.DataColumns;
 import net.micode.notes.data.Notes.DataConstants;
 import net.micode.notes.data.Notes.NoteColumns;
-import net.micode.notes.data.Notes.PasswordColums;
+import net.micode.notes.data.Notes.PasswordColumns;
 import net.micode.notes.data.Notes.TextNote;
 import net.micode.notes.tool.ResourceParser.NoteBgResources;
 
@@ -61,6 +61,8 @@ public class WorkingNote {
 
     private boolean mIsDeleted;
 
+    private boolean mIsEncrypted;
+
     private NoteSettingChangedListener mNoteSettingStatusListener;
 
     public static final String[] DATA_PROJECTION = new String[] {
@@ -84,9 +86,9 @@ public class WorkingNote {
     };
 
     public static final String[] PASSWORD_PROJECTION = new String[] {
-            PasswordColums.ID,
-            PasswordColums.NOTE_ID,
-            PasswordColums.PASSWORD
+            PasswordColumns.ID,
+            PasswordColumns.NOTE_ID,
+            PasswordColumns.PASSWORD
     };
 
     private static final int DATA_ID_COLUMN = 0;
@@ -109,6 +111,12 @@ public class WorkingNote {
 
     private static final int NOTE_MODIFIED_DATE_COLUMN = 5;
 
+    private static final int PASSWORD_ID_COLUMN = 0;
+
+    private static final int PASSWORD_NOTE_ID_COLUMN = 1;
+
+    private static final int PASSWORD_PASSWORD_COLUMN = 2;
+
     // New note construct
     private WorkingNote(Context context, long folderId) {
         mContext = context;
@@ -120,6 +128,8 @@ public class WorkingNote {
         mIsDeleted = false;
         mMode = 0;
         mWidgetType = Notes.TYPE_WIDGET_INVALIDE;
+        // 默认为未加密
+        mIsEncrypted = false;
     }
 
     // Existing note construct
@@ -128,6 +138,7 @@ public class WorkingNote {
         mNoteId = noteId;
         mFolderId = folderId;
         mIsDeleted = false;
+        mIsEncrypted = false;
         mNote = new Note();
         loadNote();
     }
@@ -301,6 +312,15 @@ public class WorkingNote {
         }
     }
 
+    public void setPassword(String password) {
+        if (!mIsEncrypted) {
+            mNote.setNoteValue(NoteColumns.IS_ENCRYPTED, String.valueOf(1));
+            int hash = (mNoteId + password).hashCode();
+            mNote.setNoteValue(PasswordColumns.NOTE_ID, String.valueOf(mNoteId));
+            mNote.setNoteValue(PasswordColumns.PASSWORD, String.valueOf(hash));
+        }
+    }
+
     public void convertToCallNote(String phoneNumber, long callDate) {
         mNote.setCallData(CallNote.CALL_DATE, String.valueOf(callDate));
         mNote.setCallData(CallNote.PHONE_NUMBER, phoneNumber);
@@ -309,6 +329,10 @@ public class WorkingNote {
 
     public boolean hasClockAlert() {
         return (mAlertDate > 0 ? true : false);
+    }
+
+    public boolean hasPassword() {
+        return mIsEncrypted;
     }
 
     public String getContent() {

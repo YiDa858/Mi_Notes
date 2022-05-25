@@ -29,6 +29,7 @@ import net.micode.notes.data.Notes;
 import net.micode.notes.data.Notes.CallNote;
 import net.micode.notes.data.Notes.DataColumns;
 import net.micode.notes.data.Notes.NoteColumns;
+import net.micode.notes.data.Notes.PasswordColumns;
 import net.micode.notes.data.Notes.TextNote;
 
 import java.util.ArrayList;
@@ -50,6 +51,8 @@ public class Note {
         values.put(NoteColumns.TYPE, Notes.TYPE_NOTE);
         values.put(NoteColumns.LOCAL_MODIFIED, 1);
         values.put(NoteColumns.PARENT_ID, folderId);
+        // 默认为未加密
+        values.put(NoteColumns.IS_ENCRYPTED, 0);
         Uri uri = context.getContentResolver().insert(Notes.CONTENT_NOTE_URI, values);
 
         long noteId = 0;

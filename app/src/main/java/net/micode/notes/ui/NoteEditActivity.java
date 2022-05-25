@@ -434,7 +434,7 @@ public class NoteEditActivity extends Activity implements OnClickListener,
         if (id == R.id.btn_set_bg_color) {
             mNoteBgColorSelector.setVisibility(View.VISIBLE);
             findViewById(sBgSelectorSelectionMap.get(mWorkingNote.getBgColorId())).setVisibility(
-                    -View.VISIBLE);
+                    View.VISIBLE);
         } else if (sBgSelectorBtnsMap.containsKey(id)) {
             findViewById(sBgSelectorSelectionMap.get(mWorkingNote.getBgColorId())).setVisibility(
                     View.GONE);
@@ -552,6 +552,13 @@ public class NoteEditActivity extends Activity implements OnClickListener,
             case R.id.menu_delete_remind:
                 mWorkingNote.setAlertDate(0, false);
                 break;
+            case R.id.menu_set_password:
+                if (!mWorkingNote.hasPassword()) {
+                    String password = "123";
+                    mWorkingNote.setPassword(password);
+                } else {
+                    Toast.makeText(this, "您已经设置过密码了", Toast.LENGTH_SHORT).show();
+                }
             default:
                 break;
         }
