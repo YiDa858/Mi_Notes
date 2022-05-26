@@ -21,6 +21,7 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.OperationApplicationException;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.RemoteException;
 import android.util.Log;
@@ -31,6 +32,8 @@ import net.micode.notes.data.Notes.DataColumns;
 import net.micode.notes.data.Notes.NoteColumns;
 import net.micode.notes.data.Notes.PasswordColumns;
 import net.micode.notes.data.Notes.TextNote;
+import net.micode.notes.data.NotesDatabaseHelper;
+import net.micode.notes.data.NotesProvider;
 
 import java.util.ArrayList;
 
@@ -117,7 +120,6 @@ public class Note {
          * {@link NoteColumns#MODIFIED_DATE}. For data safety, though update note fails, we also update the
          * note data info
          */
-        Log.d(TAG, "syncNote: " + Notes.CONTENT_NOTE_URI);
         if (context.getContentResolver().update(
                 ContentUris.withAppendedId(Notes.CONTENT_NOTE_URI, noteId), mNoteDiffValues, null,
                 null) == 0) {
@@ -135,28 +137,11 @@ public class Note {
     }
 
     public boolean syncNote(Context context, long noteId, Uri uri, ContentValues NoteDiffValues) {
-        if (noteId <= 0) {
-            throw new IllegalArgumentException("Wrong note id:" + noteId);
-        }
-
-        if (!isLocalModified()) {
-            return true;
-        }
-
-        /**
-         * In theory, once data changed, the note should be updated on {@link NoteColumns#LOCAL_MODIFIED} and
-         * {@link NoteColumns#MODIFIED_DATE}. For data safety, though update note fails, we also update the
-         * note data info
-         */
         if (context.getContentResolver().insert(uri, NoteDiffValues) == null) {
-            Log.e(TAG, "Update note error, should not happen");
+            Log.e(TAG, "Insert password error, should not happen");
             // Do not return, fall through
         }
         NoteDiffValues.clear();
-
-        if (mNoteData.isLocalModified() && (mNoteData.pushIntoContentResolver(context, noteId) == null)) {
-            return false;
-        }
 
         return true;
     }

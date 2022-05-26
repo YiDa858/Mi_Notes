@@ -21,9 +21,9 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import net.micode.notes.data.Notes;
 import net.micode.notes.data.Notes.CallNote;
@@ -32,8 +32,10 @@ import net.micode.notes.data.Notes.DataConstants;
 import net.micode.notes.data.Notes.NoteColumns;
 import net.micode.notes.data.Notes.PasswordColumns;
 import net.micode.notes.data.Notes.TextNote;
-import net.micode.notes.data.NotesProvider;
 import net.micode.notes.tool.ResourceParser.NoteBgResources;
+import net.micode.notes.ui.NoteEditActivity;
+
+import java.util.Arrays;
 
 
 public class WorkingNote {
@@ -89,9 +91,10 @@ public class WorkingNote {
     };
 
     public static final String[] PASSWORD_PROJECTION = new String[]{
-            PasswordColumns._ID,
             PasswordColumns.NOTE_ID,
-            PasswordColumns.PASSWORD
+            PasswordColumns.PASSWORD,
+            PasswordColumns.QUESTION,
+            PasswordColumns.ANSWER
     };
 
     private static final int DATA_ID_COLUMN = 0;
@@ -114,11 +117,15 @@ public class WorkingNote {
 
     private static final int NOTE_MODIFIED_DATE_COLUMN = 5;
 
-    private static final int PASSWORD_ID_COLUMN = 0;
+    private static final int NOTE_IS_ENCRYPTED_COLUMN = 6;
 
-    private static final int PASSWORD_NOTE_ID_COLUMN = 1;
+    private static final int PASSWORD_NOTE_ID_COLUMN = 0;
 
-    private static final int PASSWORD_PASSWORD_COLUMN = 2;
+    private static final int PASSWORD_PASSWORD_COLUMN = 1;
+
+    private static final int PASSWORD_QUESTION_COLUMN = 2;
+
+    private static final int PASSWORD_ANSWER_COLUMN = 3;
 
     // New note construct
     private WorkingNote(Context context, long folderId) {
@@ -315,7 +322,34 @@ public class WorkingNote {
         }
     }
 
-    public void setPassword(String password) {
+    public boolean hasPassword() {
+        Cursor cursor = mContext.getContentResolver().query(
+                ContentUris.withAppendedId(Notes.CONTENT_NOTE_URI, mNoteId), NOTE_PROJECTION, null,
+                null, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                mFolderId = cursor.getLong(NOTE_PARENT_ID_COLUMN);
+                mBgColorId = cursor.getInt(NOTE_BG_COLOR_ID_COLUMN);
+                mWidgetId = cursor.getInt(NOTE_WIDGET_ID_COLUMN);
+                mWidgetType = cursor.getInt(NOTE_WIDGET_TYPE_COLUMN);
+                mAlertDate = cursor.getLong(NOTE_ALERTED_DATE_COLUMN);
+                mModifiedDate = cursor.getLong(NOTE_MODIFIED_DATE_COLUMN);
+                if (cursor.getInt(NOTE_IS_ENCRYPTED_COLUMN) == 1) {
+                    mIsEncrypted = true;
+                } else {
+                    mIsEncrypted = false;
+                }
+
+            }
+            cursor.close();
+        } else {
+            Log.e(TAG, "No note with id:" + mNoteId);
+            throw new IllegalArgumentException("Unable to find note with id " + mNoteId);
+        }
+        return mIsEncrypted;
+    }
+
+    public void setPassword(String password, String question, String answer) {
         if (!mIsEncrypted) {
             mNote.setNoteValue(NoteColumns.IS_ENCRYPTED, String.valueOf(1));
             mNote.syncNote(mContext, mNoteId);
@@ -323,9 +357,66 @@ public class WorkingNote {
             ContentValues mNoteDiffValues = new ContentValues();
             mNoteDiffValues.put(PasswordColumns.NOTE_ID, String.valueOf(mNoteId));
             mNoteDiffValues.put(PasswordColumns.PASSWORD, String.valueOf(hash));
+            mNoteDiffValues.put(PasswordColumns.QUESTION, String.valueOf(question));
+            mNoteDiffValues.put(PasswordColumns.ANSWER, String.valueOf(answer));
+            Log.d(TAG, "setPassword: " + mNoteDiffValues);
             mNote.syncNote(mContext, mNoteId, Notes.CONTENT_PASSWORD_URI, mNoteDiffValues);
             Log.d(TAG, "setPassword: set password successfully :) ");
         }
+    }
+
+    public void changePassword(String old_password, String new_password) {
+        int hash = (mNoteId + old_password).hashCode();
+        Log.d(TAG, "changePassword: old " + hash);
+        String selection = "note_id=?";
+        String[] args = new String[]{String.valueOf(mNoteId)};
+        Cursor cursor = mContext.getContentResolver().query(Notes.CONTENT_PASSWORD_URI, PASSWORD_PROJECTION,
+                selection, args, null);
+        String mPassword = "123";
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                mPassword = cursor.getString(PASSWORD_PASSWORD_COLUMN);
+            }
+            cursor.close();
+        } else {
+            Log.e(TAG, "No note with id:" + mNoteId);
+            throw new IllegalArgumentException("Unable to find note with id " + mNoteId);
+        }
+        if (String.valueOf(hash).equals(mPassword)) {
+            ContentValues mNoteDiffValues = new ContentValues();
+            hash = (mNoteId + new_password).hashCode();
+            Log.d(TAG, "changePassword: new " + hash);
+            mNoteDiffValues.put(PasswordColumns.PASSWORD, String.valueOf(hash));
+            selection = "note_id=?";
+            mContext.getContentResolver().update(Notes.CONTENT_PASSWORD_URI, mNoteDiffValues, selection, args);
+        }
+    }
+
+    public boolean deletePassword(String password) {
+        int hash = (mNoteId + password).hashCode();
+        String selection = "note_id=?";
+        String[] args = new String[]{String.valueOf(mNoteId)};
+        Cursor cursor = mContext.getContentResolver().query(Notes.CONTENT_PASSWORD_URI, PASSWORD_PROJECTION,
+                selection, args, null);
+        String mPassword = "123";
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                mPassword = cursor.getString(PASSWORD_PASSWORD_COLUMN);
+            }
+            cursor.close();
+        } else {
+            Log.e(TAG, "No note with id:" + mNoteId);
+            throw new IllegalArgumentException("Unable to find note with id " + mNoteId);
+        }
+        if (String.valueOf(hash).equals(mPassword)) {
+            mNote.setNoteValue(NoteColumns.IS_ENCRYPTED, String.valueOf(0));
+            mNote.syncNote(mContext, mNoteId);
+            selection = "note_id=?";
+            Log.d(TAG, "deletePassword: " + Arrays.toString(args));
+            mContext.getContentResolver().delete(Notes.CONTENT_PASSWORD_URI, selection, args);
+            return true;
+        }
+        return false;
     }
 
     public void convertToCallNote(String phoneNumber, long callDate) {
@@ -336,14 +427,6 @@ public class WorkingNote {
 
     public boolean hasClockAlert() {
         return (mAlertDate > 0 ? true : false);
-    }
-
-    public boolean hasPassword() {
-//        String selection = "SELECT * FROM password WHERE note_id = ?";
-//        String[] note_id = {String.valueOf(0)};
-//        NotesProvider np = new NotesProvider();
-//        Cursor cursor = np.query(Uri.parse("content://micode_notes/note"), PASSWORD_PROJECTION, selection, note_id, null);
-        return mIsEncrypted;
     }
 
     public String getContent() {

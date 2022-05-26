@@ -308,7 +308,7 @@ public class NotesDatabaseHelper extends SQLiteOpenHelper {
         // TODO:password表触发器
     }
 
-    static synchronized NotesDatabaseHelper getInstance(Context context) {
+    public static synchronized NotesDatabaseHelper getInstance(Context context) {
         if (mInstance == null) {
             mInstance = new NotesDatabaseHelper(context);
         }

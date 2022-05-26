@@ -566,14 +566,36 @@ public class NoteEditActivity extends Activity implements OnClickListener,
                 mWorkingNote.setAlertDate(0, false);
                 break;
             case R.id.menu_set_password:
-                Log.d(TAG, "onOptionsItemSelected: yes");
                 if (!mWorkingNote.hasPassword()) {
                     String password = "123";
-                    mWorkingNote.setPassword(password);
+                    String question = "456";
+                    String answer = "789";
+                    mWorkingNote.setPassword(password, question, answer);
                 } else {
-                    Log.d(TAG, "onOptionsItemSelected: no");
                     Toast.makeText(this, "您已经设置过密码了", Toast.LENGTH_SHORT).show();
                 }
+                break;
+            case R.id.menu_change_password:
+                if (mWorkingNote.hasPassword()) {
+                    String new_password = "456";
+                    String old_password = "123";
+                    mWorkingNote.changePassword(old_password, new_password);
+                } else {
+                    Toast.makeText(this, "您还没有设置过密码", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.menu_delete_password:
+                boolean flag = false;
+                if (mWorkingNote.hasPassword()) {
+                    String password = "123";
+                    flag = mWorkingNote.deletePassword(password);
+                } else {
+                    Toast.makeText(this, "您还没有设置过密码", Toast.LENGTH_SHORT).show();
+                }
+                if (!flag) {
+                    Toast.makeText(this, "密码错误", Toast.LENGTH_SHORT).show();
+                }
+                break;
             default:
                 break;
         }

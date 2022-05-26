@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
@@ -143,6 +144,10 @@ public class NotesProvider extends ContentProvider {
                     Log.e(TAG, "got exception: " + ex.toString());
                 }
                 break;
+            case URI_PASSWORD:
+                c = db.query(TABLE.PASSWORD, projection, selection, selectionArgs, null, null,
+                        sortOrder);
+                break;
             default:
                 throw new IllegalArgumentException("Unknown URI " + uri);
         }
@@ -223,6 +228,9 @@ public class NotesProvider extends ContentProvider {
                         DataColumns.ID + "=" + id + parseSelection(selection), selectionArgs);
                 deleteData = true;
                 break;
+            case URI_PASSWORD:
+                count = db.delete(TABLE.PASSWORD, selection, selectionArgs);
+                break;
             default:
                 throw new IllegalArgumentException("Unknown URI " + uri);
         }
@@ -263,11 +271,14 @@ public class NotesProvider extends ContentProvider {
                 updateData = true;
                 break;
             case URI_PASSWORD:
-                Log.d(TAG, "update: 341");
+                count = db.update(TABLE.PASSWORD, values, selection, selectionArgs);
+                updateData = true;
                 break;
             case URI_PASSWORD_ITEM:
-                Log.d(TAG, "update: 123");
-                break;
+                id = uri.getPathSegments().get(1);
+                count = db.update(TABLE.PASSWORD, values, DataColumns.ID + "=" + id
+                        + parseSelection(selection), selectionArgs);
+                updateData = true;
             default:
                 throw new IllegalArgumentException("Unknown URI " + uri);
         }
