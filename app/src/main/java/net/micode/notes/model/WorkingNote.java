@@ -349,6 +349,28 @@ public class WorkingNote {
         return mIsEncrypted;
     }
 
+    public boolean searchPassword(String password) {
+        int hash = (mNoteId + password).hashCode();
+        String selection = "note_id=?";
+        String[] args = new String[]{String.valueOf(mNoteId)};
+        Cursor cursor = mContext.getContentResolver().query(Notes.CONTENT_PASSWORD_URI, PASSWORD_PROJECTION,
+                selection, args, null);
+        String mPassword = "";
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                mPassword = cursor.getString(PASSWORD_PASSWORD_COLUMN);
+            }
+            cursor.close();
+        } else {
+            Log.e(TAG, "No note with id:" + mNoteId);
+            throw new IllegalArgumentException("Unable to find note with id " + mNoteId);
+        }
+        if (String.valueOf(hash).equals(mPassword)) {
+            return true;
+        }
+        return false;
+    }
+
     public void setPassword(String password, String question, String answer) {
         if (!mIsEncrypted) {
             mNote.setNoteValue(NoteColumns.IS_ENCRYPTED, String.valueOf(1));

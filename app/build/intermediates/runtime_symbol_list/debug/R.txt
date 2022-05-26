@@ -88,6 +88,7 @@ int id delete 0x7f05000a
 int id et_edit_text 0x7f05000b
 int id et_foler_name 0x7f05000c
 int id font_size_selector 0x7f05000d
+int id forget 0x7f05004c
 int id hour 0x7f05000e
 int id iv_alert_icon 0x7f05000f
 int id iv_bg_blue 0x7f050010
@@ -140,6 +141,7 @@ int id prefenerece_sync_status_textview 0x7f05003e
 int id preference_sync_button 0x7f05003f
 int id question 0x7f050040
 int id selection_menu 0x7f050041
+int id submit 0x7f05004d
 int id sv_note_edit 0x7f050042
 int id tv_alert_date 0x7f050043
 int id tv_folder_name 0x7f050044
@@ -157,6 +159,8 @@ int layout datetime_picker 0x7f060003
 int layout delete_password 0x7f060004
 int layout dialog_edit_text 0x7f060005
 int layout folder_list_item 0x7f060006
+int layout forget 0x7f060012
+int layout input_password 0x7f060011
 int layout note_edit 0x7f060007
 int layout note_edit_list_item 0x7f060008
 int layout note_item 0x7f060009
@@ -165,6 +169,7 @@ int layout note_list_dropdown_menu 0x7f06000b
 int layout note_list_footer 0x7f06000c
 int layout set_password 0x7f06000d
 int layout settings_header 0x7f06000e
+int layout update_password 0x7f060013
 int layout widget_2x 0x7f06000f
 int layout widget_4x 0x7f060010
 int menu call_note_edit 0x7f070000

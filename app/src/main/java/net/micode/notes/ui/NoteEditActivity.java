@@ -165,6 +165,39 @@ public class NoteEditActivity extends Activity implements OnClickListener,
             return;
         }
         initResources();
+        if (mWorkingNote.hasPassword()) {
+            final AlertDialog.Builder alBuilder = new AlertDialog.Builder(this);
+            View dialogView = LayoutInflater.from(this).inflate(R.layout.input_password, null);
+            Button forget = findViewById(R.id.forget);
+            forget.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("id", String.valueOf(mWorkingNote.getNoteId()));
+                    Intent intent = new Intent("android.intent.action.forget");
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+            });
+            TextView password = dialogView.findViewById(R.id.password);
+            final String[] pwd = {""};
+            alBuilder.setView(dialogView);
+            alBuilder.setNegativeButton("ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    pwd[0] = password.getText().toString();
+                    if (mWorkingNote.searchPassword(pwd[0])) {
+                        dialogInterface.dismiss();
+                    } else {
+                        finish();
+                    }
+                }
+            });
+            final AlertDialog dialog = alBuilder.create();
+            dialog.show();
+            dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        }
+
     }
 
     /**

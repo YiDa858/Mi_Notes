@@ -85,6 +85,15 @@
                 android:resource="@xml/searchable" />
         </activity>
 
+        <activity
+            android:name=".ui.forget"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.forget"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
         <provider
             android:name="net.micode.notes.data.NotesProvider"
             android:authorities="micode_notes"

@@ -11,6 +11,8 @@
         <entry key="..\:/Code_Field/Mi_Notes/app/src/main/res/layout/delete_password.xml" value="0.2484375" />
         <entry key="..\:/Code_Field/Mi_Notes/app/src/main/res/layout/dialog_edit_text.xml" value="0.24947916666666667" />
         <entry key="..\:/Code_Field/Mi_Notes/app/src/main/res/layout/folder_list_item.xml" value="0.24947916666666667" />
+        <entry key="..\:/Code_Field/Mi_Notes/app/src/main/res/layout/forget.xml" value="0.1" />
+        <entry key="..\:/Code_Field/Mi_Notes/app/src/main/res/layout/input_password.xml" value="0.2484375" />
         <entry key="..\:/Code_Field/Mi_Notes/app/src/main/res/layout/note_edit.xml" value="0.24947916666666667" />
         <entry key="..\:/Code_Field/Mi_Notes/app/src/main/res/layout/note_edit_list_item.xml" value="0.24947916666666667" />
         <entry key="..\:/Code_Field/Mi_Notes/app/src/main/res/layout/note_item.xml" value="0.24947916666666667" />
@@ -19,6 +21,7 @@
         <entry key="..\:/Code_Field/Mi_Notes/app/src/main/res/layout/note_list_footer.xml" value="0.24947916666666667" />
         <entry key="..\:/Code_Field/Mi_Notes/app/src/main/res/layout/set_password.xml" value="0.264" />
         <entry key="..\:/Code_Field/Mi_Notes/app/src/main/res/layout/settings_header.xml" value="0.24947916666666667" />
+        <entry key="..\:/Code_Field/Mi_Notes/app/src/main/res/layout/update_password.xml" value="0.1" />
         <entry key="..\:/Code_Field/Mi_Notes/app/src/main/res/menu/call_note_edit.xml" value="0.24947916666666667" />
         <entry key="..\:/Code_Field/Mi_Notes/app/src/main/res/menu/call_note_edit_has_pass.xml" value="0.24947916666666667" />
         <entry key="..\:/Code_Field/Mi_Notes/app/src/main/res/menu/call_note_edit_no_pass.xml" value="0.24947916666666667" />

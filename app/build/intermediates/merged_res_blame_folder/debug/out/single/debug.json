@@ -36,6 +36,10 @@
         "source": "F:\\Code_Field\\Mi_Notes\\app\\src\\main\\res\\drawable-hdpi\\list_yellow_single.9.png"
     },
     {
+        "merged": "F:\\Code_Field\\Mi_Notes\\app\\build\\intermediates\\merged_res\\debug\\layout_input_password.xml.flat",
+        "source": "F:\\Code_Field\\Mi_Notes\\app\\src\\main\\res\\layout\\input_password.xml"
+    },
+    {
         "merged": "F:\\Code_Field\\Mi_Notes\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_list_green_down.9.png.flat",
         "source": "F:\\Code_Field\\Mi_Notes\\app\\src\\main\\res\\drawable-hdpi\\list_green_down.9.png"
     },
@@ -312,6 +316,10 @@
         "source": "F:\\Code_Field\\Mi_Notes\\app\\src\\main\\res\\layout\\folder_list_item.xml"
     },
     {
+        "merged": "F:\\Code_Field\\Mi_Notes\\app\\build\\intermediates\\merged_res\\debug\\layout_forget.xml.flat",
+        "source": "F:\\Code_Field\\Mi_Notes\\app\\src\\main\\res\\layout\\forget.xml"
+    },
+    {
         "merged": "F:\\Code_Field\\Mi_Notes\\app\\build\\intermediates\\merged_res\\debug\\menu_call_note_edit_has_pass.xml.flat",
         "source": "F:\\Code_Field\\Mi_Notes\\app\\src\\main\\res\\menu\\call_note_edit_has_pass.xml"
     },
@@ -378,6 +386,10 @@
     {
         "merged": "F:\\Code_Field\\Mi_Notes\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_bg_color_btn_mask.png.flat",
         "source": "F:\\Code_Field\\Mi_Notes\\app\\src\\main\\res\\drawable-hdpi\\bg_color_btn_mask.png"
+    },
+    {
+        "merged": "F:\\Code_Field\\Mi_Notes\\app\\build\\intermediates\\merged_res\\debug\\layout_update_password.xml.flat",
+        "source": "F:\\Code_Field\\Mi_Notes\\app\\src\\main\\res\\layout\\update_password.xml"
     },
     {
         "merged": "F:\\Code_Field\\Mi_Notes\\app\\build\\intermediates\\merged_res\\debug\\layout_note_item.xml.flat",
