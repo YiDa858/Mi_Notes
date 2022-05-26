@@ -129,6 +129,12 @@
     <string name="menu_set_password">Set password</string>
     <string name="menu_change_password">Change password</string>
     <string name="menu_delete_password">Delete password</string>
+    <string name="password">password</string>
+    <string name="question">security question</string>
+    <string name="answer">security answer</string>
+    <string name="yes">yes</string>
+    <string name="old_password">old password</string>
+    <string name="new_password">new password</string>
     <plurals name="search_results_title">
          <item quantity="one"><xliff:g id="number" example="1">%1$s</xliff:g> result for \"<xliff:g id="search" example="???">%2$s</xliff:g>\"</item>
         <!-- Case of 0 or 2 or more results. -->

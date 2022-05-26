@@ -372,7 +372,7 @@ public class WorkingNote {
         String[] args = new String[]{String.valueOf(mNoteId)};
         Cursor cursor = mContext.getContentResolver().query(Notes.CONTENT_PASSWORD_URI, PASSWORD_PROJECTION,
                 selection, args, null);
-        String mPassword = "123";
+        String mPassword = "";
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 mPassword = cursor.getString(PASSWORD_PASSWORD_COLUMN);
@@ -382,6 +382,7 @@ public class WorkingNote {
             Log.e(TAG, "No note with id:" + mNoteId);
             throw new IllegalArgumentException("Unable to find note with id " + mNoteId);
         }
+        Log.d(TAG, "changePassword: " + mPassword);
         if (String.valueOf(hash).equals(mPassword)) {
             ContentValues mNoteDiffValues = new ContentValues();
             hash = (mNoteId + new_password).hashCode();
@@ -417,6 +418,12 @@ public class WorkingNote {
             return true;
         }
         return false;
+    }
+
+    public void deletePassword() {
+        Log.d(TAG, "deletePassword: deleting...");
+        String[] args = new String[]{String.valueOf(mNoteId)};
+        mContext.getContentResolver().delete(Notes.CONTENT_PASSWORD_URI, "note_id=?", args);
     }
 
     public void convertToCallNote(String phoneNumber, long callDate) {

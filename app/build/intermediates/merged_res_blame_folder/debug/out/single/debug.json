@@ -48,6 +48,10 @@
         "source": "F:\\Code_Field\\Mi_Notes\\app\\src\\main\\res\\menu\\note_edit_no_pass.xml"
     },
     {
+        "merged": "F:\\Code_Field\\Mi_Notes\\app\\build\\intermediates\\merged_res\\debug\\layout_set_password.xml.flat",
+        "source": "F:\\Code_Field\\Mi_Notes\\app\\src\\main\\res\\layout\\set_password.xml"
+    },
+    {
         "merged": "F:\\Code_Field\\Mi_Notes\\app\\build\\intermediates\\merged_res\\debug\\menu_call_note_edit_no_pass.xml.flat",
         "source": "F:\\Code_Field\\Mi_Notes\\app\\src\\main\\res\\menu\\call_note_edit_no_pass.xml"
     },
@@ -98,6 +102,10 @@
     {
         "merged": "F:\\Code_Field\\Mi_Notes\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_edit_title_white.9.png.flat",
         "source": "F:\\Code_Field\\Mi_Notes\\app\\src\\main\\res\\drawable-hdpi\\edit_title_white.9.png"
+    },
+    {
+        "merged": "F:\\Code_Field\\Mi_Notes\\app\\build\\intermediates\\merged_res\\debug\\layout_change_password.xml.flat",
+        "source": "F:\\Code_Field\\Mi_Notes\\app\\src\\main\\res\\layout\\change_password.xml"
     },
     {
         "merged": "F:\\Code_Field\\Mi_Notes\\app\\build\\intermediates\\merged_res\\debug\\xml_searchable.xml.flat",
@@ -294,6 +302,10 @@
     {
         "merged": "F:\\Code_Field\\Mi_Notes\\app\\build\\intermediates\\merged_res\\debug\\layout_dialog_edit_text.xml.flat",
         "source": "F:\\Code_Field\\Mi_Notes\\app\\src\\main\\res\\layout\\dialog_edit_text.xml"
+    },
+    {
+        "merged": "F:\\Code_Field\\Mi_Notes\\app\\build\\intermediates\\merged_res\\debug\\layout_delete_password.xml.flat",
+        "source": "F:\\Code_Field\\Mi_Notes\\app\\src\\main\\res\\layout\\delete_password.xml"
     },
     {
         "merged": "F:\\Code_Field\\Mi_Notes\\app\\build\\intermediates\\merged_res\\debug\\layout_folder_list_item.xml.flat",

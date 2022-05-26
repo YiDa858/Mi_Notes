@@ -56,6 +56,10 @@ public class DataUtils {
             ContentProviderOperation.Builder builder = ContentProviderOperation
                     .newDelete(ContentUris.withAppendedId(Notes.CONTENT_NOTE_URI, id));
             operationList.add(builder.build());
+            ContentProviderOperation.Builder pwdbuilder = ContentProviderOperation
+                    .newDelete(ContentUris.withAppendedId(Notes.CONTENT_PASSWORD_URI, id));
+            operationList.add(pwdbuilder.build());
+            Log.d(TAG, "batchDeleteNotes: pwdbuilder");
         }
         try {
             ContentProviderResult[] results = resolver.applyBatch(Notes.AUTHORITY, operationList);

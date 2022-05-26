@@ -43,6 +43,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -65,6 +66,7 @@ import net.micode.notes.ui.NoteEditText.OnTextViewChangeListener;
 import net.micode.notes.widget.NoteWidgetProvider_2x;
 import net.micode.notes.widget.NoteWidgetProvider_4x;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -495,18 +497,14 @@ public class NoteEditActivity extends Activity implements OnClickListener,
         // 修改下拉栏表项
         if (mWorkingNote.getFolderId() == Notes.ID_CALL_RECORD_FOLDER) {
             if (mWorkingNote.hasPassword()) {
-                Log.d(TAG, "onPrepareOptionsMenu: call_note_edit_has_pass");
                 getMenuInflater().inflate(R.menu.call_note_edit_has_pass, menu);
             } else {
-                Log.d(TAG, "onPrepareOptionsMenu: call_note_edit_no_pass");
                 getMenuInflater().inflate(R.menu.call_note_edit_no_pass, menu);
             }
         } else {
             if (mWorkingNote.hasPassword()) {
-                Log.d(TAG, "onPrepareOptionsMenu: note_edit_has_pass");
                 getMenuInflater().inflate(R.menu.note_edit_has_pass, menu);
             } else {
-                Log.d(TAG, "onPrepareOptionsMenu: note_edit_no_pass");
                 getMenuInflater().inflate(R.menu.note_edit_no_pass, menu);
             }
         }
@@ -536,6 +534,7 @@ public class NoteEditActivity extends Activity implements OnClickListener,
                 builder.setMessage(getString(R.string.alert_message_delete_note));
                 builder.setPositiveButton(android.R.string.ok,
                         new DialogInterface.OnClickListener() {
+                            @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 deleteCurrentNote();
                                 finish();
@@ -567,34 +566,73 @@ public class NoteEditActivity extends Activity implements OnClickListener,
                 break;
             case R.id.menu_set_password:
                 if (!mWorkingNote.hasPassword()) {
-                    String password = "123";
-                    String question = "456";
-                    String answer = "789";
-                    mWorkingNote.setPassword(password, question, answer);
+                    final AlertDialog.Builder alBuilder = new AlertDialog.Builder(this);
+                    View dialogView = LayoutInflater.from(this).inflate(R.layout.set_password, null);
+                    TextView password = dialogView.findViewById(R.id.password);
+                    TextView question = dialogView.findViewById(R.id.question);
+                    TextView answer = dialogView.findViewById(R.id.answer);
+                    final String[] ps = {""};
+                    final String[] qu = {""};
+                    final String[] an = {""};
+                    alBuilder.setView(dialogView);
+                    alBuilder.setNegativeButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            ps[0] = password.getText().toString();
+                            qu[0] = question.getText().toString();
+                            an[0] = answer.getText().toString();
+                            mWorkingNote.setPassword(ps[0], qu[0], an[0]);
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    alBuilder.show();
                 } else {
                     Toast.makeText(this, "您已经设置过密码了", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.menu_change_password:
                 if (mWorkingNote.hasPassword()) {
-                    String new_password = "456";
-                    String old_password = "123";
-                    mWorkingNote.changePassword(old_password, new_password);
+                    final AlertDialog.Builder alBuilder = new AlertDialog.Builder(this);
+                    View dialogView = LayoutInflater.from(this).inflate(R.layout.change_password, null);
+                    TextView ol_password = dialogView.findViewById(R.id.old_password);
+                    TextView ne_password = dialogView.findViewById(R.id.new_password);
+                    final String[] old_password = {""};
+                    final String[] new_password = {""};
+                    alBuilder.setView(dialogView);
+                    alBuilder.setNegativeButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            old_password[0] = ol_password.getText().toString();
+                            new_password[0] = ne_password.getText().toString();
+                            mWorkingNote.changePassword(old_password[0], new_password[0]);
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    alBuilder.show();
                 } else {
                     Toast.makeText(this, "您还没有设置过密码", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.menu_delete_password:
-                boolean flag = false;
+                final String[] password = {""};
                 if (mWorkingNote.hasPassword()) {
-                    String password = "123";
-                    flag = mWorkingNote.deletePassword(password);
+                    final AlertDialog.Builder alBuilder = new AlertDialog.Builder(this);
+                    View dialogView = LayoutInflater.from(this).inflate(R.layout.delete_password, null);
+                    TextView pwd = dialogView.findViewById(R.id.password);
+                    alBuilder.setView(dialogView);
+                    alBuilder.setNegativeButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            password[0] = pwd.getText().toString();
+                            mWorkingNote.deletePassword(password[0]);
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    alBuilder.show();
                 } else {
                     Toast.makeText(this, "您还没有设置过密码", Toast.LENGTH_SHORT).show();
                 }
-                if (!flag) {
-                    Toast.makeText(this, "密码错误", Toast.LENGTH_SHORT).show();
-                }
+                Log.d(TAG, "onOptionsItemSelected: " + mWorkingNote.hasPassword());
                 break;
             default:
                 break;
@@ -653,6 +691,7 @@ public class NoteEditActivity extends Activity implements OnClickListener,
                     Log.e(TAG, "Move notes to trash folder error, should not happens");
                 }
             }
+            mWorkingNote.deletePassword();
         }
         mWorkingNote.markDeleted(true);
     }

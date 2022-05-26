@@ -122,6 +122,12 @@
     <string name="menu_set_password">设置密码</string>
     <string name="menu_change_password">修改密码</string>
     <string name="menu_delete_password">删除密码</string>
+    <string name="password">密码</string>
+    <string name="question">密保问题</string>
+    <string name="answer">密保答案</string>
+    <string name="yes">确定</string>
+    <string name="old_password">旧密码</string>
+    <string name="new_password">新密码</string>
     <plurals name="search_results_title">
         <item quantity="other"><xliff:g id="NUMBER">%1$s</xliff:g> 条符合“<xliff:g id="SEARCH">%2$s</xliff:g>”的搜索结果</item>
     </plurals>

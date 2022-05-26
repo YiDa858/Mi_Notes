@@ -231,6 +231,11 @@ public class NotesProvider extends ContentProvider {
             case URI_PASSWORD:
                 count = db.delete(TABLE.PASSWORD, selection, selectionArgs);
                 break;
+            case URI_PASSWORD_ITEM:
+                id = uri.getPathSegments().get(1);
+                count = db.delete(TABLE.PASSWORD,
+                        Notes.PasswordColumns.NOTE_ID + "=" + id + parseSelection(selection), selectionArgs);
+                break;
             default:
                 throw new IllegalArgumentException("Unknown URI " + uri);
         }

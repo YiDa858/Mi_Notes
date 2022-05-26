@@ -123,6 +123,12 @@
     <string name="menu_set_password">設置密碼</string>
     <string name="menu_change_password">修改密碼</string>
     <string name="menu_delete_password">刪除密碼</string>
+    <string name="password">密碼</string>
+    <string name="question">密保問題</string>
+    <string name="answer">密保答案</string>
+    <string name="yes">確定</string>
+    <string name="old_password">舊密碼</string>
+    <string name="new_password">新密碼</string>
     <plurals name="search_results_title">
         <item quantity="other"><xliff:g id="NUMBER">%1$s</xliff:g> 條符合”<xliff:g id="SEARCH">%2$s</xliff:g>“的搜尋結果</item>
     </plurals>
