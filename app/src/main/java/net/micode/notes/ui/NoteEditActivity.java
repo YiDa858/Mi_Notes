@@ -183,6 +183,7 @@ public class NoteEditActivity extends Activity implements OnClickListener,
                 }
             });
             final AlertDialog dialog = alBuilder.create();
+            dialog.setCancelable(false);
             dialog.show();
             dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         }
