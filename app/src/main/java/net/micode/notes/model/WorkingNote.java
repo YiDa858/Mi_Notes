@@ -93,8 +93,6 @@ public class WorkingNote {
     public static final String[] PASSWORD_PROJECTION = new String[]{
             PasswordColumns.NOTE_ID,
             PasswordColumns.PASSWORD,
-            PasswordColumns.QUESTION,
-            PasswordColumns.ANSWER
     };
 
     private static final int DATA_ID_COLUMN = 0;
@@ -122,10 +120,6 @@ public class WorkingNote {
     private static final int PASSWORD_NOTE_ID_COLUMN = 0;
 
     private static final int PASSWORD_PASSWORD_COLUMN = 1;
-
-    private static final int PASSWORD_QUESTION_COLUMN = 2;
-
-    private static final int PASSWORD_ANSWER_COLUMN = 3;
 
     // New note construct
     private WorkingNote(Context context, long folderId) {
@@ -328,12 +322,6 @@ public class WorkingNote {
                 null, null);
         if (cursor != null) {
             if (cursor.moveToFirst()) {
-                mFolderId = cursor.getLong(NOTE_PARENT_ID_COLUMN);
-                mBgColorId = cursor.getInt(NOTE_BG_COLOR_ID_COLUMN);
-                mWidgetId = cursor.getInt(NOTE_WIDGET_ID_COLUMN);
-                mWidgetType = cursor.getInt(NOTE_WIDGET_TYPE_COLUMN);
-                mAlertDate = cursor.getLong(NOTE_ALERTED_DATE_COLUMN);
-                mModifiedDate = cursor.getLong(NOTE_MODIFIED_DATE_COLUMN);
                 if (cursor.getInt(NOTE_IS_ENCRYPTED_COLUMN) == 1) {
                     mIsEncrypted = true;
                 } else {
@@ -371,7 +359,7 @@ public class WorkingNote {
         return false;
     }
 
-    public void setPassword(String password, String question, String answer) {
+    public void setPassword(String password) {
         if (!mIsEncrypted) {
             mNote.setNoteValue(NoteColumns.IS_ENCRYPTED, String.valueOf(1));
             mNote.syncNote(mContext, mNoteId);
@@ -379,8 +367,6 @@ public class WorkingNote {
             ContentValues mNoteDiffValues = new ContentValues();
             mNoteDiffValues.put(PasswordColumns.NOTE_ID, String.valueOf(mNoteId));
             mNoteDiffValues.put(PasswordColumns.PASSWORD, String.valueOf(hash));
-            mNoteDiffValues.put(PasswordColumns.QUESTION, String.valueOf(question));
-            mNoteDiffValues.put(PasswordColumns.ANSWER, String.valueOf(answer));
             Log.d(TAG, "setPassword: " + mNoteDiffValues);
             mNote.syncNote(mContext, mNoteId, Notes.CONTENT_PASSWORD_URI, mNoteDiffValues);
             Log.d(TAG, "setPassword: set password successfully :) ");

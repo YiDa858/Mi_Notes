@@ -36,12 +36,12 @@
         "source": "F:\\Code_Field\\Mi_Notes\\app\\src\\main\\res\\drawable-hdpi\\list_yellow_single.9.png"
     },
     {
-        "merged": "F:\\Code_Field\\Mi_Notes\\app\\build\\intermediates\\merged_res\\debug\\layout_input_password.xml.flat",
-        "source": "F:\\Code_Field\\Mi_Notes\\app\\src\\main\\res\\layout\\input_password.xml"
-    },
-    {
         "merged": "F:\\Code_Field\\Mi_Notes\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_list_green_down.9.png.flat",
         "source": "F:\\Code_Field\\Mi_Notes\\app\\src\\main\\res\\drawable-hdpi\\list_green_down.9.png"
+    },
+    {
+        "merged": "F:\\Code_Field\\Mi_Notes\\app\\build\\intermediates\\merged_res\\debug\\layout_input_password.xml.flat",
+        "source": "F:\\Code_Field\\Mi_Notes\\app\\src\\main\\res\\layout\\input_password.xml"
     },
     {
         "merged": "F:\\Code_Field\\Mi_Notes\\app\\build\\intermediates\\merged_res\\debug\\layout_widget_2x.xml.flat",
@@ -68,12 +68,12 @@
         "source": "F:\\Code_Field\\Mi_Notes\\app\\src\\main\\res\\drawable-hdpi\\call_record.png"
     },
     {
-        "merged": "F:\\Code_Field\\Mi_Notes\\app\\build\\intermediates\\merged_res\\debug\\layout_settings_header.xml.flat",
-        "source": "F:\\Code_Field\\Mi_Notes\\app\\src\\main\\res\\layout\\settings_header.xml"
-    },
-    {
         "merged": "F:\\Code_Field\\Mi_Notes\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_edit_blue.9.png.flat",
         "source": "F:\\Code_Field\\Mi_Notes\\app\\src\\main\\res\\drawable-hdpi\\edit_blue.9.png"
+    },
+    {
+        "merged": "F:\\Code_Field\\Mi_Notes\\app\\build\\intermediates\\merged_res\\debug\\layout_settings_header.xml.flat",
+        "source": "F:\\Code_Field\\Mi_Notes\\app\\src\\main\\res\\layout\\settings_header.xml"
     },
     {
         "merged": "F:\\Code_Field\\Mi_Notes\\app\\build\\intermediates\\merged_res\\debug\\menu_call_note_edit.xml.flat",
@@ -84,12 +84,12 @@
         "source": "F:\\Code_Field\\Mi_Notes\\app\\src\\main\\res\\drawable-hdpi\\title_bar_bg.9.png"
     },
     {
-        "merged": "F:\\Code_Field\\Mi_Notes\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_list_red_up.9.png.flat",
-        "source": "F:\\Code_Field\\Mi_Notes\\app\\src\\main\\res\\drawable-hdpi\\list_red_up.9.png"
-    },
-    {
         "merged": "F:\\Code_Field\\Mi_Notes\\app\\build\\intermediates\\merged_res\\debug\\drawable_new_note.xml.flat",
         "source": "F:\\Code_Field\\Mi_Notes\\app\\src\\main\\res\\drawable\\new_note.xml"
+    },
+    {
+        "merged": "F:\\Code_Field\\Mi_Notes\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_list_red_up.9.png.flat",
+        "source": "F:\\Code_Field\\Mi_Notes\\app\\src\\main\\res\\drawable-hdpi\\list_red_up.9.png"
     },
     {
         "merged": "F:\\Code_Field\\Mi_Notes\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_list_yellow_down.9.png.flat",
@@ -314,10 +314,6 @@
     {
         "merged": "F:\\Code_Field\\Mi_Notes\\app\\build\\intermediates\\merged_res\\debug\\layout_folder_list_item.xml.flat",
         "source": "F:\\Code_Field\\Mi_Notes\\app\\src\\main\\res\\layout\\folder_list_item.xml"
-    },
-    {
-        "merged": "F:\\Code_Field\\Mi_Notes\\app\\build\\intermediates\\merged_res\\debug\\layout_forget.xml.flat",
-        "source": "F:\\Code_Field\\Mi_Notes\\app\\src\\main\\res\\layout\\forget.xml"
     },
     {
         "merged": "F:\\Code_Field\\Mi_Notes\\app\\build\\intermediates\\merged_res\\debug\\menu_call_note_edit_has_pass.xml.flat",

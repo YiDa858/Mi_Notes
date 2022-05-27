@@ -168,17 +168,6 @@ public class NoteEditActivity extends Activity implements OnClickListener,
         if (mWorkingNote.hasPassword()) {
             final AlertDialog.Builder alBuilder = new AlertDialog.Builder(this);
             View dialogView = LayoutInflater.from(this).inflate(R.layout.input_password, null);
-            Button forget = findViewById(R.id.forget);
-            forget.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("id", String.valueOf(mWorkingNote.getNoteId()));
-                    Intent intent = new Intent("android.intent.action.forget");
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                }
-            });
             TextView password = dialogView.findViewById(R.id.password);
             final String[] pwd = {""};
             alBuilder.setView(dialogView);
@@ -602,25 +591,19 @@ public class NoteEditActivity extends Activity implements OnClickListener,
                     final AlertDialog.Builder alBuilder = new AlertDialog.Builder(this);
                     View dialogView = LayoutInflater.from(this).inflate(R.layout.set_password, null);
                     TextView password = dialogView.findViewById(R.id.password);
-                    TextView question = dialogView.findViewById(R.id.question);
-                    TextView answer = dialogView.findViewById(R.id.answer);
                     final String[] ps = {""};
-                    final String[] qu = {""};
-                    final String[] an = {""};
                     alBuilder.setView(dialogView);
                     alBuilder.setNegativeButton("ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             ps[0] = password.getText().toString();
-                            qu[0] = question.getText().toString();
-                            an[0] = answer.getText().toString();
-                            mWorkingNote.setPassword(ps[0], qu[0], an[0]);
+                            mWorkingNote.setPassword(ps[0]);
                             dialogInterface.dismiss();
                         }
                     });
                     alBuilder.show();
                 } else {
-                    Toast.makeText(this, "您已经设置过密码了", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "您已经设置过密码了", Toast.LENGTH_LONG).show();
                 }
                 break;
             case R.id.menu_change_password:
@@ -643,7 +626,7 @@ public class NoteEditActivity extends Activity implements OnClickListener,
                     });
                     alBuilder.show();
                 } else {
-                    Toast.makeText(this, "您还没有设置过密码", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "您还没有设置过密码", Toast.LENGTH_LONG).show();
                 }
                 break;
             case R.id.menu_delete_password:
@@ -663,7 +646,7 @@ public class NoteEditActivity extends Activity implements OnClickListener,
                     });
                     alBuilder.show();
                 } else {
-                    Toast.makeText(this, "您还没有设置过密码", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "您还没有设置过密码", Toast.LENGTH_LONG).show();
                 }
                 Log.d(TAG, "onOptionsItemSelected: " + mWorkingNote.hasPassword());
                 break;
