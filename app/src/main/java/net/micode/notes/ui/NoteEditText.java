@@ -100,6 +100,8 @@ public class NoteEditText extends EditText {
         // TODO Auto-generated constructor stub
     }
 
+
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
@@ -116,6 +118,7 @@ public class NoteEditText extends EditText {
                 int line = layout.getLineForVertical(y);
                 int off = layout.getOffsetForHorizontal(line, x);
                 Selection.setSelection(getText(), off);
+                Log.d(TAG, "onTouchEvent: off=" + off);   //  lyf edit
                 break;
         }
 

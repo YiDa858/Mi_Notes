@@ -407,7 +407,7 @@ public class WorkingNote {
         String[] args = new String[]{String.valueOf(mNoteId)};
         Cursor cursor = mContext.getContentResolver().query(Notes.CONTENT_PASSWORD_URI, PASSWORD_PROJECTION,
                 selection, args, null);
-        String mPassword = "123";
+        String mPassword = "";
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 mPassword = cursor.getString(PASSWORD_PASSWORD_COLUMN);

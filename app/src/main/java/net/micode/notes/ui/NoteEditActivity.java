@@ -30,19 +30,27 @@ import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.text.format.DateUtils;
 import android.text.style.BackgroundColorSpan;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.ExtractedText;
+import android.view.inputmethod.ExtractedTextRequest;
+import android.view.inputmethod.InputConnection;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -125,7 +133,13 @@ public class NoteEditActivity extends Activity implements OnClickListener,
     }
 
     private static final String TAG = "NoteEditActivity";
+    //  lyf edit
+    private TextView mCounterView;
 
+    private Integer mNoteLength;
+
+    private Integer mSelectedLength;
+    //  lyf edit
     private HeadViewHolder mNoteHeaderHolder;
 
     private View mHeadViewPanel;
@@ -296,13 +310,17 @@ public class NoteEditActivity extends Activity implements OnClickListener,
     }
 
     private void initNoteScreen() {
+        Log.d(TAG, "initNoteScreen: " + mNoteEditor.getText()); // lyf edit
         mNoteEditor.setTextAppearance(this, TextAppearanceResources
                 .getTexAppearanceResource(mFontSizeId));
         if (mWorkingNote.getCheckListMode() == TextNote.MODE_CHECK_LIST) {
             switchToListMode(mWorkingNote.getContent());
         } else {
+            //  setText就是去插对应的noteId下的text，而后设置
             mNoteEditor.setText(getHighlightQueryResult(mWorkingNote.getContent(), mUserQuery));
+            //  如果没有setSelection()的话，光标会在开头位置
             mNoteEditor.setSelection(mNoteEditor.getText().length());
+            Log.d(TAG, "initNoteScreen: getLength--" + mNoteEditor.getSelectionEnd()); //lyf edit
         }
         for (Integer id : sBgSelectorSelectionMap.keySet()) {
             findViewById(sBgSelectorSelectionMap.get(id)).setVisibility(View.GONE);
@@ -399,6 +417,46 @@ public class NoteEditActivity extends Activity implements OnClickListener,
         mNoteHeaderHolder.ibSetBgColor = (ImageView) findViewById(R.id.btn_set_bg_color);
         mNoteHeaderHolder.ibSetBgColor.setOnClickListener(this);
         mNoteEditor = (EditText) findViewById(R.id.note_edit_view);
+        //  lyf edit
+        mCounterView = (TextView) findViewById(R.id.note_length);
+
+        mNoteEditor.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String content = mNoteEditor.getText().toString();
+                mNoteLength = content.length();
+                Log.d(TAG, "onTextChanged: 1");
+                mCounterView.setText(String.format("Text Length: %s", mNoteLength.toString()));
+                Log.d(TAG, "onTextChanged: NoteLength is " + mNoteLength + " now.");
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        mNoteEditor.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+//                Log.d(TAG, "onLongClick: 长按选中文本");
+//                int start = mNoteEditor.getSelectionStart();
+//                Log.d(TAG, "onLongClick: start=" + start);
+//                int end = mNoteEditor.getSelectionEnd();
+//                Log.d(TAG, "onLongClick: end=" + end);
+//                CharSequence selectText = mNoteEditor.getText().subSequence(start, end);
+//                mSelectedLength = selectText.length();
+//                Log.d(TAG, "onLongClick: SelectedLength=" + mSelectedLength);
+//                mCounterView.setText(String.format("Text Length: %s/%s", mSelectedLength, mNoteLength.toString()));
+                return false;
+            }
+        });
+
         mNoteEditorPanel = findViewById(R.id.sv_note_edit);
         mNoteBgColorSelector = findViewById(R.id.note_bg_color_selector);
         for (int id : sBgSelectorBtnsMap.keySet()) {
@@ -782,7 +840,7 @@ public class NoteEditActivity extends Activity implements OnClickListener,
          * Should not happen, check for debug
          */
         if (index > mEditTextList.getChildCount()) {
-            Log.e(TAG, "Index out of mEditTextList boundrary, should not happen");
+            Log.e(TAG, "Index out of mEditTextList boundary, should not happen");
         }
 
         View view = getListItem(text, index);
@@ -827,6 +885,7 @@ public class NoteEditActivity extends Activity implements OnClickListener,
                 start = m.end();
             }
         }
+        Log.d(TAG, "getHighlightQueryResult: " + spannable.toString()); //  lyf edit
         return spannable;
     }
 
@@ -905,6 +964,9 @@ public class NoteEditActivity extends Activity implements OnClickListener,
             }
             mWorkingNote.setWorkingText(sb.toString());
         } else {
+
+            Log.d(TAG, "getWorkingText: " + mNoteEditor.getText()); //lyf edit
+
             mWorkingNote.setWorkingText(mNoteEditor.getText().toString());
         }
         return hasChecked;

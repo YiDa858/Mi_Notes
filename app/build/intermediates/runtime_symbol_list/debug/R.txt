@@ -131,6 +131,7 @@ int id note_bg_color_selector 0x7f050035
 int id note_edit_list 0x7f050036
 int id note_edit_view 0x7f050037
 int id note_item 0x7f050038
+int id note_length 0x7f05004a
 int id note_title 0x7f050039
 int id notes_list 0x7f05003a
 int id old_password 0x7f05003b

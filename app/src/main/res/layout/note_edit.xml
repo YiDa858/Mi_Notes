@@ -40,6 +40,15 @@
                 android:layout_marginRight="8dip"
                 android:textAppearance="@style/TextAppearanceSecondaryItem" />
 
+            <TextView
+                android:id="@+id/note_length"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="right|center_vertical"
+                android:textAppearance="@style/TextAppearanceSecondaryItem" />
+
+
             <ImageView
                 android:id="@+id/iv_alert_icon"
                 android:layout_width="wrap_content"
@@ -85,7 +94,8 @@
 
                 <LinearLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent">
+                    android:layout_height="fill_parent"
+                    android:orientation="horizontal">
 
                     <net.micode.notes.ui.NoteEditText
                         android:id="@+id/note_edit_view"
